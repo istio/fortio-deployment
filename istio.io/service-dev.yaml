@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-io
+spec:
+  selector:
+    app: istio-io
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+  - name: https
+    port: 443

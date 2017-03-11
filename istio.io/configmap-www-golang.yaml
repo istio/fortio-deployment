@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: www-golang
+data:
+  # Adding new entries here will make them appear as files in the deployment.
+  contrib.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/contrib git https://github.com/istio/contrib">
+      <meta name="go-source" content="istio.io/contrib     https://github.com/istio/contrib https://github.com/istio/contrib/tree/master{/dir} https://github.com/istio/contrib/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  examples.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/examples git https://github.com/istio/examples">
+      <meta name="go-source" content="istio.io/examples     https://github.com/istio/examples https://github.com/istio/examples/tree/master{/dir} https://github.com/istio/examples/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  gengo.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/gengo git https://github.com/istio/gengo">
+      <meta name="go-source" content="istio.io/gengo     https://github.com/istio/gengo https://github.com/istio/gengo/tree/master{/dir} https://github.com/istio/gengo/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  git-sync.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/git-sync git https://github.com/istio/git-sync">
+      <meta name="go-source" content="istio.io/git-sync     https://github.com/istio/git-sync https://github.com/istio/git-sync/tree/master{/dir} https://github.com/istio/git-sync/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  heapster.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/heapster git https://github.com/istio/heapster">
+      <meta name="go-source" content="istio.io/heapster     https://github.com/istio/heapster https://github.com/istio/heapster/tree/master{/dir} https://github.com/istio/heapster/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  helm.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/helm git https://github.com/istio/helm">
+      <meta name="go-source" content="istio.io/helm     https://github.com/istio/helm https://github.com/istio/helm/tree/master{/dir} https://github.com/istio/helm/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  ingress.html: |
+    <!DOCTYPE html>
+    <html><head>
+      <meta name="go-import" content="istio.io/ingress git https://github.com/istio/ingress">
+      <meta name="go-source" content="istio.io/ingress     https://github.com/istio/ingress https://github.com/istio/ingress/tree/master{/dir} https://github.com/istio/ingress/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  kops.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/kops git https://github.com/istio/kops">
+      <meta name="go-source" content="istio.io/kops     https://github.com/istio/kops https://github.com/istio/kops/tree/master{/dir} https://github.com/istio/kops/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  kubedash.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/kubedash git https://github.com/istio/kubedash">
+      <meta name="go-source" content="istio.io/kubedash     https://github.com/istio/kubedash https://github.com/istio/kubedash/tree/master{/dir} https://github.com/istio/kubedash/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  kube-deploy.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/kube-deploy git https://github.com/istio/kube-deploy">
+      <meta name="go-source" content="istio.io/kube-deploy     https://github.com/istio/kube-deploy https://github.com/istio/kube-deploy/tree/master{/dir} https://github.com/istio/kube-deploy/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  istio.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/istio git https://github.com/istio/istio">
+      <meta name="go-source" content="istio.io/istio     https://github.com/istio/istio https://github.com/istio/istio/tree/master{/dir} https://github.com/istio/istio/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  kube-ui.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/kube-ui git https://github.com/istio/kube-ui">
+      <meta name="go-source" content="istio.io/kube-ui     https://github.com/istio/kube-ui https://github.com/istio/kube-ui/tree/master{/dir} https://github.com/istio/kube-ui/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  minikube.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/minikube git https://github.com/istio/minikube">
+      <meta name="go-source" content="istio.io/minikube     https://github.com/istio/minikube https://github.com/istio/minikube/tree/master{/dir} https://github.com/istio/minikube/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  client-go.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/client-go git https://github.com/istio/client-go">
+      <meta name="go-source" content="istio.io/client-go     https://github.com/istio/client-go https://github.com/istio/client-go/tree/master{/dir} https://github.com/istio/client-go/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  apimachinery.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/apimachinery git https://github.com/istio/apimachinery">
+      <meta name="go-source" content="istio.io/apimachinery     https://github.com/istio/apimachinery https://github.com/istio/apimachinery/tree/master{/dir} https://github.com/istio/apimachinery/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  apiserver.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/apiserver git https://github.com/istio/apiserver">
+      <meta name="go-source" content="istio.io/apiserver     https://github.com/istio/apiserver https://github.com/istio/apiserver/tree/master{/dir} https://github.com/istio/apiserver/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  test-infra.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/test-infra git https://github.com/istio/test-infra">
+      <meta name="go-source" content="istio.io/test-infra     https://github.com/istio/test-infra https://github.com/istio/test-infra/tree/master{/dir} https://github.com/istio/test-infra/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  metrics.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/metrics git https://github.com/istio/metrics">
+      <meta name="go-source" content="istio.io/metrics     https://github.com/istio/metrics https://github.com/istio/metrics/tree/master{/dir} https://github.com/istio/metrics/blob/master{/dir}/{file}#L{line}">
+    </head></html>
