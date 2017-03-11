@@ -10,7 +10,6 @@ function kc() {
 
 kc apply \
     -f configmap-nginx.yaml \
-    -f configmap-www-get.yaml \
     -f configmap-www-golang.yaml \
     -f deployment.yaml \
     -f service-canary.yaml
@@ -31,4 +30,4 @@ while true; do
   echo "want ${WANT}, found ${HAVE}"
 done
 
-make test TARGET_IP=104.197.208.221
+make test TARGET_IP=<canary-LB-IP>

@@ -25,10 +25,6 @@ spec:
         configMap:
           name: nginx
           # Map all keys to files.
-      - name: www-get
-        configMap:
-          name: www-get
-          # Map all keys to files.
       - name: www-golang
         configMap:
           name: www-golang
@@ -59,9 +55,6 @@ spec:
         volumeMounts:
         - name: nginx
           mountPath: /etc/nginx
-          readOnly: true
-        - name: www-get
-          mountPath: /www/get
           readOnly: true
         - name: www-golang
           mountPath: /www/golang

@@ -6,7 +6,7 @@ spec:
   selector:
     app: istio-io
   type: LoadBalancer
-  loadBalancerIP: 104.197.208.221
+  loadBalancerIP: <canary-LB-IP>
   ports:
   - name: http
     port: 80
