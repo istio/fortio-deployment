@@ -21,7 +21,7 @@ data:
       #
       # Upgrade HTTP to HTTPS.
       server {
-        server_name istio.io;
+      	server_name istio.io;
         listen 80;
         return 301 https://$server_name$request_uri;
       }
@@ -52,199 +52,14 @@ data:
         # the github side are to the vanity domain.  DNS points the vanity
         # domain at this nginx.
         location / {
-          proxy_set_header Host istio.io;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
-          proxy_pass https://istio.github.io;
+          return 302 github.com/istio/istio;
+
+          # Uncomment for istio.io vanity domain redirect to istio.github.io
+          # proxy_set_header Host istio.io;
+          # proxy_set_header X-Real-IP $remote_addr;
+          # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          # proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
+          # proxy_pass https://istio.github.io;
         }
-      }
-      # Vanity names.
-      server {
-        server_name istio.io kubernet.es;
-        listen 80;
-        listen 443 ssl;
-        return 301 https://istio.io$request_uri;
-      }
-
-      #
-      # Vanity redirect rules.
-      #
-
-      server {
-        server_name apt.istio.io apt.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://packages.cloud.google.com/apt/$1 redirect;
-      }
-
-      server {
-        server_name yum.istio.io yum.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://packages.cloud.google.com/yum/$1 redirect;
-      }
-
-      server {
-        server_name changelog.istio.io changelog.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://github.com/istio/istio/releases/tag/$1 redirect;
-      }
-      server {
-        server_name ci-test.istio.io ci-test.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        # This is really not ideal, but there's no obvious way to browse GCS that handles directories and files.
-        rewrite ^/$             https://console.developers.google.com/storage/browser/istio-jenkins/logs redirect;
-        # Things that look like builds should be viewed on Gubernator
-        rewrite ^/(.*/\d+)/?$   https://istio-gubernator.appspot.com/build/istio-jenkins/logs/$1 redirect;
-        rewrite ^/(.*)/$        https://console.developers.google.com/storage/browser/istio-jenkins/logs/$1 redirect;
-        rewrite ^/(.*)$         https://storage.cloud.google.com/istio-jenkins/logs/$1 redirect;
-      }
-      server {
-        server_name code.istio.io code.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://github.com/istio/istio/tree/master/$1 redirect;
-      }
-      server {
-        server_name dl.istio.io dl.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          # Don't require /release/ if you want to get at the Kubernetes release artifacts, the common case.
-          rewrite ^/(v[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)\.[0-9]+)?/.*)$   https://storage.googleapis.com/istio-release/release/$1 redirect;
-          # Provide a convenient redirect for CI (continuous integration) artifacts as well, which live in a different bucket.
-          rewrite ^/ci(-cross)?/?(.*)$              https://storage.googleapis.com/istio-release-dev/ci$1/$2 redirect;
-          rewrite ^/(.*)$                  https://storage.googleapis.com/istio-release/$1 redirect;
-        }
-      }
-      server {
-        server_name docs.istio.io docs.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/v[0-9]+\.[0-9]+(/.*)?$     http://istio.io/docs$1   redirect; # legacy
-          rewrite ^/(.*)$                      http://istio.io/docs/$1  redirect;
-        }
-      }
-      server {
-        server_name examples.istio.io examples.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/v([0-9]+\.[0-9]+)(/.*)?$    https://github.com/istio/istio/tree/release-$1/examples$2  redirect;
-          rewrite ^/(.*)$                       https://github.com/istio/istio/tree/master/examples/$1     redirect;
-        }
-      }
-      server {
-        server_name feature.istio.io features.istio.io feature.istio.io features.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/(.*)$  https://github.com/istio/features/issues/$1 redirect;
-        }
-      }
-      server {
-        server_name get.istio.io get.istio.io;
-        listen 80;
-        # 443 is covered below.
-
-        location / {
-          root /www/get;
-          index get-kube-insecure.sh;
-        }
-      }
-      server {
-        server_name get.istio.io get.istio.io;
-        listen 443 ssl;
-        # 80 is covered above.
-
-        # Note that 'location =' is an exact match, no sub-URI's match.
-        location = / {
-          proxy_set_header Host raw.githubusercontent.com;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
-          proxy_pass https://raw.githubusercontent.com/istio/istio/master/cluster/get-kube.sh;
-        }
-      }
-      server {
-        server_name go.istio.io go.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/bounty$          https://github.com/istio/istio.github.io/issues?q=is%3Aopen+is%3Aissue+label%3ABounty redirect;
-          rewrite ^/help-wanted$     https://github.com/istio/istio/labels/help-wanted redirect;
-          rewrite ^/oncall$          https://storage.googleapis.com/istio-jenkins/oncall.html redirect;
-          rewrite ^/partner-request$ https://docs.google.com/forms/d/e/1FAIpQLSdN1KtSKX2VAOPGABFlShkSd6CajQynoL4QCVtY0dj76MNDKg/viewform redirect;
-          rewrite ^/start$           http://istio.io/docs/getting-started-guides/ redirect;
-          rewrite ^/test-history$    https://storage.googleapis.com/istio-test-history/static/index.html redirect;
-          rewrite ^/triage$          https://storage.googleapis.com/istio-gubernator/triage/index.html redirect;
-        }
-      }
-      server {
-        server_name issue.istio.io issues.istio.io issue.istio.io issues.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/(.*)$              https://github.com/istio/istio/issues/$1 redirect;
-        }
-      }
-      server {
-        server_name pr.istio.io prs.istio.io pr.istio.io prs.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/$                  https://github.com/istio/istio/pulls redirect;
-          rewrite ^/(.*)$              https://github.com/istio/istio/pull/$1 redirect;
-        }
-      }
-      server {
-        server_name pr-test.istio.io pr-test.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/$       https://istio-gubernator.appspot.com redirect;
-        rewrite ^/(.*)$   https://istio-gubernator.appspot.com/pr/$1 redirect;
-
-      }
-      server {
-        server_name releases.istio.io rel.istio.io releases.istio.io rel.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        location / {
-          rewrite ^/$                  https://github.com/istio/istio/releases redirect;
-          rewrite ^/([^/]*)(/.*)?$     https://github.com/istio/istio/tree/$1$2 redirect;
-        }
-      }
-      server {
-        server_name reviewable.istio.io reviewable.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://reviewable.istio.io/$1 redirect;
-      }
-
-      server {
-        server_name testgrid.istio.io testgrid.istio.io;
-        listen 80;
-        listen 443 ssl;
-
-        rewrite ^/(.*)?$    https://istio-testgrid.appspot.com/$1 redirect;
       }
     }

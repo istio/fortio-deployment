@@ -11,9 +11,8 @@ deploy-fake-secret:
 deploy:
 	kubectl get secret/ssl || kubectl apply -f secret-ssl.yaml
 	kubectl apply -f configmap-nginx.yaml
-	kubectl apply -f configmap-www-get.yaml
 	kubectl apply -f configmap-www-golang.yaml
-	kubectl apply -f service-dev.yaml
+	kubectl apply -f service-prod.yaml
 	kubectl apply -f deployment.yaml
 
 .PHONY: test

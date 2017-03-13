@@ -109,15 +109,6 @@ class ContentTest(unittest.TestCase):
         resp, body = do_get(base + '/foobar/123?go-get=1')
         self.assertEqual(resp.status, 404)
 
-    def test_get(self):
-        for base in ('http://get.istio.io', 'http://get.istio.io'):
-            self.assert_body_configmap(base, 'get/get-kube-insecure.sh')
-
-        for base in ('https://get.istio.io', 'https://get.istio.io'):
-          self.assert_body_url(
-              base,
-              'https://raw.githubusercontent.com/istio/istio/master/cluster/get-kube.sh')
-
 
 if __name__ == '__main__':
     TARGET_IP = os.environ.get('TARGET_IP')

@@ -6,7 +6,7 @@ spec:
   selector:
     app: istio-io
   type: LoadBalancer
-  loadBalancerIP: <PROD-LB-IP>
+  loadBalancerIP: 35.185.199.142
   ports:
   - name: http
     port: 80
