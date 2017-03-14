@@ -1,0 +1,10 @@
+apiVersion: "stable.hightower.com/v1"
+kind: "Certificate"
+metadata:
+  name: "istio-io"
+spec:
+  domain: "istio.io"
+  email: "jasonyoung@google.com"
+  provider: "googledns"
+  secret: "istio-io-secret"
+  secretKey: "istio-io-cert-kube-manager.json"
