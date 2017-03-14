@@ -23,8 +23,17 @@ data:
       server {
       	server_name istio.io;
         listen 80;
-        return 301 https://$server_name$request_uri;
+
+        location /_healthz {
+          add_header Content-Type text/plain;
+          return 200 'ok';
+        }
+
+        location / {
+          return 301 https://$server_name$request_uri;
+        }
       }
+
       # Handle HTTPS.
       server {
         server_name istio.io;

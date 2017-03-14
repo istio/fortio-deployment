@@ -29,9 +29,9 @@ spec:
         configMap:
           name: www-golang
           # Map all keys to files.
-      - name: ssl
+      - name: certs
         secret:
-          secretName: ssl
+          secretName: istio.io
           # Map all keys to files.
       containers:
       - name: nginx
@@ -45,13 +45,13 @@ spec:
           containerPort: 80
         - name: https
           containerPort: 443
-        # livenessProbe:
-        #   httpGet:
-        #     path: /_healthz
-        #     port: 80
-        #   initialDelaySeconds: 3
-        #   timeoutSeconds: 2
-        #   failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /_healthz
+            port: 80
+          initialDelaySeconds: 3
+          timeoutSeconds: 2
+          failureThreshold: 2
         volumeMounts:
         - name: nginx
           mountPath: /etc/nginx
@@ -59,6 +59,6 @@ spec:
         - name: www-golang
           mountPath: /www/golang
           readOnly: true
-        - name: ssl
+        - name: certs
           mountPath: /certs
           readOnly: true
