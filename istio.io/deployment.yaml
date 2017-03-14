@@ -45,13 +45,13 @@ spec:
           containerPort: 80
         - name: https
           containerPort: 443
-        livenessProbe:
-          httpGet:
-            path: /_healthz
-            port: 80
-          initialDelaySeconds: 3
-          timeoutSeconds: 2
-          failureThreshold: 2
+        # livenessProbe:
+        #   httpGet:
+        #     path: /_healthz
+        #     port: 80
+        #   initialDelaySeconds: 3
+        #   timeoutSeconds: 2
+        #   failureThreshold: 2
         volumeMounts:
         - name: nginx
           mountPath: /etc/nginx
