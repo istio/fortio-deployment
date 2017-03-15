@@ -72,4 +72,24 @@ data:
         #   proxy_pass https://istio.github.io;
         # }
       }
+
+      # Upgrade HTTP to HTTPS
+      server {
+        server_name testing.istio.io;
+        listen 80;
+        return 301 https://$server_name$request_uri;
+      }
+
+      server {
+        server_name testing.istio.io;
+        listen 443 ssl;
+
+        location / {
+          proxy_set_header Host testing.istio.io;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
+          proxy_pass http://35.186.192.80;
+        }
+      }
     }
