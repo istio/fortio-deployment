@@ -55,22 +55,18 @@ data:
           return 200 'ok';
         }
 
+        # Proxy to the real site.
+        # We set the host to the vanity domain `istio.io` but proxy to
+        # `istio.github.io` so that any relative redirects it generates on
+        # the github side are to the vanity domain.  DNS points the vanity
+        # domain at this nginx.
         location / {
-          return 302 https://github.com/istio/istio;
+          proxy_set_header Host istio.io;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
+          proxy_pass https://istio.github.io;
         }
-
-        # # Proxy to the real site.
-        # # We set the host to the vanity domain `istio.io` but proxy to
-        # # `istio.github.io` so that any relative redirects it generates on
-        # # the github side are to the vanity domain.  DNS points the vanity
-        # # domain at this nginx.
-        # location / {
-        #   proxy_set_header Host istio.io;
-        #   proxy_set_header X-Real-IP $remote_addr;
-        #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        #   proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
-        #   proxy_pass https://istio.github.io;
-        # }
       }
 
       # Upgrade HTTP to HTTPS
