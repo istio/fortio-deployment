@@ -7,9 +7,9 @@ deploy-fake-secret:
 	openssl x509 -req -days 10000 -in tls.csr -signkey tls.key -out tls.crt
 	kubectl get istio.io || kubectl create secret generic istio.io --from-file=tls.key=tls.key --from-file=tls.crt=tls.crt
 
+# TODO add deployment step for multi-domain certificate.
 .PHONY: deploy
 deploy:
-	kubectl get secret/ssl || kubectl apply -f secret-ssl.yaml
 	kubectl apply -f configmap-nginx.yaml
 	kubectl apply -f configmap-www-golang.yaml
 	kubectl apply -f service-prod.yaml
