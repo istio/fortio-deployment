@@ -44,6 +44,6 @@ Use canary.sh to verify configuration changes. This creates a seperate nginx dep
     
     OK
 
-The canary cluster has a separate load balanced IP which can be used for additional manual checks. Use steps in the testing section above to determine the ingress IP.
+The canary cluster has a separate load balanced IP which can be used for additional manual checks. Use steps in the testing section above to determine the ingress IP of the canary cluster.
 
 For the real deployment set kubectl to target the production cluster and run `make deploy`. Nginx doesn't auto-detect configuration file changes so pods may need to be manually killed to force deployment to restart nginx with new configuration via ConfigMaps.
