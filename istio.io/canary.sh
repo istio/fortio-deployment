@@ -5,8 +5,17 @@ set -o nounset
 set -o pipefail
 
 function kc() {
-  kubectl --context=utilicluster --namespace=istio-io-canary "$@"
+  kubectl --context=gke_istio-io_us-west1-b_istio-io-cluster --namespace=istio-io-canary "$@"
 }
+
+function create_secret() {
+    openssl genrsa -out tls.key 2048
+    openssl req -new -key tls.key -out tls.csr -subj '/CN=istio.io/O=TEST/C=US'
+    openssl x509 -req -days 10000 -in tls.csr -signkey tls.key -out tls.crt
+    kc create secret generic istio.io --from-file=tls.key=tls.key --from-file=tls.crt=tls.crt
+}
+
+kc get secret/istio.io || create_secret
 
 kc apply \
     -f configmap-nginx.yaml \
@@ -30,4 +39,4 @@ while true; do
   echo "want ${WANT}, found ${HAVE}"
 done
 
-make test TARGET_IP=<canary-LB-IP>
+make test TARGET_IP=104.198.5.229

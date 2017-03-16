@@ -55,16 +55,9 @@ class RedirTest(unittest.TestCase):
         self.assertEqual(resp.status, expected_code)
         self.assertEqual(resp.getheader('location'), expected_loc)
 
-    def assert_redirect(self, partial_url, expected_loc, expected_code, **kwargs):
-        for scheme in ('http', 'https'):
-            self.assert_scheme_redirect(
-                    scheme + '://' + partial_url, expected_loc, expected_code, **kwargs)
-
-    def assert_temp_redirect(self, partial_url, expected_loc, **kwargs):
-        self.assert_redirect(partial_url, expected_loc, 302, **kwargs)
-
-    def assert_perm_redirect(self, partial_url, expected_loc, **kwargs):
-        self.assert_redirect(partial_url, expected_loc, 301, **kwargs)
+    def assert_redirect(self, url, expected_loc, expected_code, **kwargs):
+        self.assert_scheme_redirect(
+            url, expected_loc, expected_code, **kwargs)
 
     def test_main(self):
         # Main URL.
@@ -78,9 +71,9 @@ class RedirTest(unittest.TestCase):
                 'http://istio.io' + path, 'https://istio.io' + path, 301)
 
     def test_go_get(self):
-        self.assert_perm_redirect('istio.io/istio?go-get=1',
-                'https://istio.io/istio?go-get=1')
-        self.assert_code('https://istio.io/istio?go-get=1', 200)
+        self.assert_redirect('http://istio.io/manager?go-get=1',
+                             'https://istio.io/manager?go-get=1', 301)
+        self.assert_code('https://istio.io/manager?go-get=1', 200)
 
 
 class ContentTest(unittest.TestCase):
@@ -103,7 +96,7 @@ class ContentTest(unittest.TestCase):
     def test_go_get(self):
         base = 'https://istio.io' # because everything ends up there
         suff = '%d?go-get=1' % rand_num()
-        for pkg in ('manager', 'mixer', 'proxy'):
+        for pkg in ('manager', 'mixer'):
             self.assert_body_configmap('%s/%s/%s' % (base, pkg, suff),
                 'golang/%s.html' % pkg)
         resp, body = do_get(base + '/foobar/123?go-get=1')

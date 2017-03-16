@@ -5,7 +5,7 @@ deploy-fake-secret:
 	openssl genrsa -out tls.key 2048
 	openssl req -new -key tls.key -out tls.csr -subj '/CN=istio.io/O=TEST/C=US'
 	openssl x509 -req -days 10000 -in tls.csr -signkey tls.key -out tls.crt
-	kubectl get secret/ssl || kubectl create secret generic ssl --from-file=tls.key=tls.key --from-file=tls.crt=tls.crt
+	kubectl get istio.io || kubectl create secret generic istio.io --from-file=tls.key=tls.key --from-file=tls.crt=tls.crt
 
 .PHONY: deploy
 deploy:
