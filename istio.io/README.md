@@ -47,3 +47,43 @@ Use canary.sh to verify configuration changes. This creates a seperate nginx dep
 The canary cluster has a separate load balanced IP which can be used for additional manual checks. Use steps in the testing section above to determine the ingress IP of the canary cluster.
 
 For the real deployment set kubectl to target the production cluster and run `make deploy`. Nginx doesn't auto-detect configuration file changes so pods may need to be manually killed to force deployment to restart nginx with new configuration via ConfigMaps.
+
+Design
+===
+
+This repo is based on https://github.com/kubernetes/k8s.io and uses various Google Cloud platform services for the actual infrastructure. This document describes the high-level design for the istio.io infrastructure beyond what is already documented by the kubernetes YAML files. When in doubt read the source and https://cloud.google.com/dns/docs or open an GH issue. There are certainly ways to improve upon this approach so suggestions and PR welcome. 
+
+The basic idea is to use a L4 load balancer in front of a cluster of nginx proxies. The L4 load balancer distributes traffic  to all healthy proxy instances whose number can be scaled up/down based on system load and desired reliability.
+
+### DNS and addresses
+
+Cloud DNS is used easy automatic management of DNS records, e.g. auto-certificate renewal via DNS challenge with ACMA client can be easily integrated into cluster. 
+
+    $ gcloud dns record-sets list --zone=istio-io
+    NAME                               TYPE   TTL    DATA
+    istio.io.                          A      300    35.185.199.142
+    istio.io.                          NS     21600  ns-cloud-e1.googledomains.com.,ns-cloud-e2.googledomains.com.,ns-cloud-e3.googledomains.com.,ns-cloud-e4.googledomains.com.
+    istio.io.                          SOA    21600  ns-cloud-e1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300
+    testing.istio.io.                  CNAME  300    istio.io.
+    www.istio.io.                      CNAME  300    istio.io.
+
+Two public ipv4 addresses are used for istio.io: `istio-io-prod` for the *.istio.io sites and `istio-io-canary` for canary tests. The A records for the `istio.io` domain point to the `istio-io-prod` address.
+
+    $ gcloud compute addresses list
+    NAME             REGION    ADDRESS         STATUS
+    istio-io-canary  us-west1  104.198.5.229   IN_USE
+    istio-io-prod    us-west1  35.185.199.142  IN_USE
+ 
+### Network load balancer and kubernetes services
+
+A kubernetes service with `type: LoadBalancer` maps an externally accessible IP to the backend services. GKE does most of the work here and sets up the necessary GCP load balancer rules when the kubernetes service is created.
+- [`service-prod.yaml`](https://github.com/istio/istio.io/blob/master/istio.io/service-prod.yaml) handles *.istio.io.
+- [`service-canary.yaml`](https://github.com/istio/istio.io/blob/master/istio.io/service-prod.yaml) handles the `istio-io-canary` address and should be run in a seperate namespace.
+- [`service-dev.yaml`](https://github.com/istio/istio.io/blob/master/istio.io/service-prod.yaml) allows for developers to test configuration changes with an ephemeral address.
+
+Additional health checks are added to the GCP load balancer to avoid forwarding traffic to unhealthy pods in the cluster.
+
+### TLS
+
+Certificates for TLS termination are from [Let's Encrypt](https://letsencrypt.org/). The current certificates are generated out-of-band and provided to nginx proxies via kubernetes secrets. Something like [kube-cert-manager](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=kube-cert-manager&*) could be used to automate certificate renewal.
+
