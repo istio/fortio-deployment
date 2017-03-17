@@ -81,8 +81,6 @@ A kubernetes service with `type: LoadBalancer` maps an externally accessible IP 
 - [`service-canary.yaml`](https://github.com/istio/istio.io/blob/master/istio.io/service-prod.yaml) handles the `istio-io-canary` address and should be run in a seperate namespace.
 - [`service-dev.yaml`](https://github.com/istio/istio.io/blob/master/istio.io/service-prod.yaml) allows for developers to test configuration changes with an ephemeral address.
 
-Additional health checks are added to the GCP load balancer to avoid forwarding traffic to unhealthy pods in the cluster.
-
 ### TLS
 
 Certificates for TLS termination are from [Let's Encrypt](https://letsencrypt.org/). The current certificates are generated out-of-band and provided to nginx proxies via kubernetes secrets. Something like [kube-cert-manager](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=kube-cert-manager&*) could be used to automate certificate renewal.
