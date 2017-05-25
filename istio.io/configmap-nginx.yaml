@@ -14,8 +14,13 @@ data:
       # Certs for all SSL server_names.
       ssl_certificate     /certs/tls.crt;
       ssl_certificate_key /certs/tls.key;
-      ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+      # SSL Session cache
+      ssl_session_cache   shared:SSL:10m;
+      ssl_session_timeout 18h;
+
+      # Proxy settings
+      proxy_ssl_session_reuse on;
 
       # Proxy settings
       proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
