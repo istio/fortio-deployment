@@ -23,6 +23,12 @@ data:
       server {
       	server_name istio.io;
         listen 80;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
         location / {
           return 301 https://$server_name$request_uri;
         }
@@ -44,9 +50,9 @@ data:
           alias /www/golang;
         }
 
-        location /_healthz {
+        location = /_healthz {
           add_header Content-Type text/plain;
-          return 200 'ok';
+          return 200 "ok\n";
         }
 
         # Proxy to the real site.
@@ -67,12 +73,23 @@ data:
       server {
         server_name testing.istio.io;
         listen 80;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
         return 301 https://$server_name$request_uri;
       }
 
       server {
         server_name testing.istio.io;
         listen 443 ssl;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
 
         location / {
           proxy_set_header Host testing.istio.io;
@@ -87,12 +104,23 @@ data:
       server {
         server_name velodrome.istio.io;
         listen 80;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
         return 301 https://$server_name$request_uri;
       }
 
       server {
         server_name velodrome.istio.io;
         listen 443 ssl;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
 
         location / {
           proxy_set_header Host velodrome.istio.io;
