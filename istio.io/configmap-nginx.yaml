@@ -37,7 +37,7 @@ data:
       # Handle HTTPS.
       server {
         server_name istio.io;
-        listen 443 ssl;
+        listen 443 ssl http2;
 
         if ($arg_go-get = "1") {
           # This is a go-get operation.
@@ -84,7 +84,7 @@ data:
 
       server {
         server_name testing.istio.io;
-        listen 443 ssl;
+        listen 443 ssl http2;
 
         location = /_healthz {
           add_header Content-Type text/plain;
@@ -115,7 +115,7 @@ data:
 
       server {
         server_name velodrome.istio.io;
-        listen 443 ssl;
+        listen 443 ssl http2;
 
         location = /_healthz {
           add_header Content-Type text/plain;
