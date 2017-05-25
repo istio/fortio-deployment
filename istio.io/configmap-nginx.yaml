@@ -11,6 +11,14 @@ data:
     }
 
     http {
+      # Compression
+      gzip              on;
+      gzip_vary         on;
+      gzip_disable      msie6;
+      gzip_proxied      any;
+      gzip_http_version 1.0;
+      gzip_min_length   256;
+
       # Certs for all SSL server_names.
       ssl_certificate     /certs/tls.crt;
       ssl_certificate_key /certs/tls.key;
