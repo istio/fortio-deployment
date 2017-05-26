@@ -144,3 +144,11 @@ or delete the nginx pods and letting kubernetes restart with udpated
 configuration and certs.
 
 - Automatic method: *TODO*
+
+Trusted CA certificate for backend (istio.github.io) verification is downloaded
+from [DigiCert](https://www.digicert.com/digicert-root-certificates.htm)
+and stored as a kubernetes secret.
+
+	curl -O https://www.digicert.com/CACerts/DigiCertHighAssuranceEVRootCA.crt
+	openssl x509 -inform DER -in DigiCertHighAssuranceEVRootCA.crt -outform PEM -out DigiCertHighAssuranceEVRootCA.pem
+	kubectl create secret generic cacerts --from-file=DigiCertHighAssuranceEVRootCA.pem --dry-run -o yaml > secret-cacerts.yaml

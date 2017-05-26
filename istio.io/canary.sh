@@ -20,8 +20,9 @@ kc get secret/istio.io || create_secret
 kc apply \
     -f configmap-nginx.yaml \
     -f configmap-www-golang.yaml \
-    -f deployment.yaml \
-    -f service-canary.yaml
+    -f secret-cacerts.yaml \
+    -f service-canary.yaml \
+    -f deployment.yaml
 
 kc scale deployment istio-io --replicas=0
 kc scale deployment istio-io --replicas=1

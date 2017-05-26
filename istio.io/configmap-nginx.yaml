@@ -30,7 +30,10 @@ data:
       # Proxy settings
       proxy_http_version      1.1;
       proxy_next_upstream     error timeout http_500 http_502 http_503 http_504;
+      proxy_ssl_name          $server_name;
+      proxy_ssl_server_name   on;
       proxy_ssl_session_reuse on;
+      proxy_ssl_verify_depth  3;
 
       # Cache settings
       proxy_cache_path              /cache levels=1:2 keys_zone=cache:10m use_temp_path=off;
@@ -91,7 +94,12 @@ data:
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
           proxy_set_header Connection "";
+
+          proxy_ssl_name   istio.github.io;
           proxy_pass       https://github;
+
+          proxy_ssl_verify on;
+          proxy_ssl_trusted_certificate /cacerts/DigiCertHighAssuranceEVRootCA.pem;
 
           add_header       X-Cache-Status $upstream_cache_status;
           proxy_cache      cache;

@@ -12,6 +12,7 @@ deploy-fake-secret:
 deploy:
 	kubectl apply -f configmap-nginx.yaml
 	kubectl apply -f configmap-www-golang.yaml
+	kubectl apply -f secret-cacerts.yaml
 	kubectl apply -f service-prod.yaml
 	kubectl apply -f deployment.yaml
 

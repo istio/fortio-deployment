@@ -33,6 +33,10 @@ spec:
         secret:
           secretName: istio.io
           # Map all keys to files.
+      - name: cacerts
+        secret:
+          secretName: cacerts
+          # Map all keys to files.
       - name: cache
         emptyDir: {}
       containers:
@@ -63,6 +67,9 @@ spec:
           readOnly: true
         - name: certs
           mountPath: /certs
+          readOnly: true
+        - name: cacerts
+          mountPath: /cacerts
           readOnly: true
         - name: cache
           mountPath: /cache
