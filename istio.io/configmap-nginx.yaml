@@ -11,14 +11,33 @@ data:
     }
 
     http {
+      # Compression
+      gzip              on;
+      gzip_vary         on;
+      gzip_disable      msie6;
+      gzip_proxied      any;
+      gzip_http_version 1.0;
+      gzip_min_length   256;
+
       # Certs for all SSL server_names.
       ssl_certificate     /certs/tls.crt;
       ssl_certificate_key /certs/tls.key;
-      ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-      ssl_ciphers         HIGH:!aNULL:!MD5;
+
+      # SSL Session cache
+      ssl_session_cache   shared:SSL:10m;
+      ssl_session_timeout 18h;
+
+      # Proxy settings
+      proxy_ssl_session_reuse on;
 
       # Proxy settings
       proxy_next_upstream error timeout http_500 http_502 http_503 http_504;
+
+      # Cache settings
+      proxy_cache_path              /cache levels=1:2 keys_zone=cache:10m use_temp_path=off;
+      proxy_cache_key               $scheme$server_name$request_uri;
+      proxy_cache_use_stale         updating error timeout http_500 http_502 http_503 http_504;
+      proxy_cache_background_update on;
 
       # This is the main site.
       #
@@ -66,8 +85,15 @@ data:
         location / {
           proxy_set_header Host istio.io;
           proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-For $remote_addr;
           proxy_pass https://istio.github.io;
+
+          add_header       X-Cache-Status $upstream_cache_status;
+          proxy_cache      cache;
+          # NGINX-based GitHub Pages don't update Expires header during
+          # cache revalidation, so we have to ignore it, otherwise we're
+          # going to treat most of the responses as uncacheable.
+          proxy_ignore_headers Expires;
         }
       }
 
@@ -96,8 +122,11 @@ data:
         location / {
           proxy_set_header Host testing.istio.io;
           proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-For $remote_addr;
           proxy_pass https://130.211.38.63;
+
+          add_header       X-Cache-Status $upstream_cache_status;
+          proxy_cache      cache;
         }
       }
 
@@ -126,8 +155,11 @@ data:
         location / {
           proxy_set_header Host velodrome.istio.io;
           proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-For $remote_addr;
           proxy_pass http://130.211.224.127;
+
+          add_header       X-Cache-Status $upstream_cache_status;
+          proxy_cache      cache;
         }
       }
     }
