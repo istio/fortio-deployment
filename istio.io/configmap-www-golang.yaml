@@ -29,3 +29,13 @@ data:
       <meta name="go-import" content="istio.io/auth git https://github.com/istio/auth">
       <meta name="go-source" content="istio.io/auth     https://github.com/istio/auth https://github.com/istio/auth/tree/master{/dir} https://github.com/istio/auth/blob/master{/dir}/{file}#L{line}">
     </head></html>
+  pilot.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/pilot git https://github.com/istio/pilot">
+      <meta name="go-source" content="istio.io/pilot     https://github.com/istio/pilot https://github.com/istio/pilot/tree/master{/dir} https://github.com/istio/pilot/blob/master{/dir}/{file}#L{line}">
+    </head></html>
+  broker.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/broker git https://github.com/istio/broker">
+      <meta name="go-source" content="istio.io/broker     https://github.com/istio/broker https://github.com/istio/broker/tree/master{/dir} https://github.com/istio/broker/blob/master{/dir}/{file}#L{line}">
+    </head></html>
