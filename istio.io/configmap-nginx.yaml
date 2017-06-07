@@ -94,7 +94,7 @@ data:
           proxy_pass       https://github;
 
           add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      cache;
+          proxy_cache      off;
           # NGINX-based GitHub Pages don't update Expires header during
           # cache revalidation, so we have to ignore it, otherwise we're
           # going to treat most of the responses as uncacheable.
@@ -138,7 +138,7 @@ data:
           proxy_pass       https://testing;
 
           add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      cache;
+          proxy_cache      off;
         }
       }
 
@@ -178,7 +178,7 @@ data:
           proxy_pass       http://velodrome;
 
           add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      cache;
+          proxy_cache      off;
         }
       }
     }
