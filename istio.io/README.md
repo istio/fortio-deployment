@@ -125,19 +125,19 @@ before completing verification as it may take some time for DNS
 changes to propogate and be picked up by Let's Encrypt's verification
 server.
 
-       sudo certbot-auto certonly --manual -d istio.io,testing.istio.io,www.istio.io,velodrome.istio.io --preferred-challenges=dns
+    sudo certbot-auto certonly --manual -d istio.io,testing.istio.io,www.istio.io,velodrome.istio.io --preferred-challenges=dns
 
 Backup current certificate secret in case changes need to be rolled
 back.
 
-       kubectl get secret istio.io -o yaml > previous-secret-istio-io.yaml
+    kubectl get secret istio.io -o yaml > previous-secret-istio-io.yaml
 
 Copy generated key and certificate file to current directory and
 refresh kubernetes certificate secret.
 
-	sudo cp /etc/letsencrypt/live/istio.io/privkey.pem tls.key
-	sudo cp /etc/letsencrypt/live/istio.io/fullchain.pem tls.crt
-	kubectl create secret generic istio.io --from-file=tls.key --from-file=tls.crt --dry-run -o yaml | kubectl apply -f -
+    sudo cp /etc/letsencrypt/live/istio.io/privkey.pem tls.key
+    sudo cp /etc/letsencrypt/live/istio.io/fullchain.pem tls.crt
+    kubectl create secret generic istio.io --from-file=tls.key --from-file=tls.crt --dry-run -o yaml | kubectl apply -f -
 
 Force nginx to pick-up the new certificates by using `/usr/sbin/nginx -s reload`
 or delete the nginx pods and letting kubernetes restart with udpated
@@ -148,12 +148,12 @@ configuration and certs.
 Download trusted CA certificates for backend (e.g. istio.github.io)
 verification and store as a kubernetes secret.
 
-	curl -O https://www.digicert.com/CACerts/DigiCertHighAssuranceEVRootCA.crt
-        curl -O https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
+    curl -O https://www.digicert.com/CACerts/DigiCertHighAssuranceEVRootCA.crt
+    curl -O https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
 
-	openssl x509 -inform DER -in DigiCertHighAssuranceEVRootCA.crt -outform PEM -out DigiCertHighAssuranceEVRootCA.pem
+    openssl x509 -inform DER -in DigiCertHighAssuranceEVRootCA.crt -outform PEM -out DigiCertHighAssuranceEVRootCA.pem
 
-	kubectl create secret generic cacerts \
-                --from-file=DigiCertHighAssuranceEVRootCA.pem \
-                --from-rile=GeoTrust_Global_CA.pem \
-                --dry-run -o yaml > secret-cacerts.yaml
+    kubectl create secret generic \
+        --from-file=DigiCertHighAssuranceEVRootCA.pem \
+        --from-file=GeoTrust_Global_CA.pem \
+        --dry-run -o yaml > secret-cacerts.yaml
