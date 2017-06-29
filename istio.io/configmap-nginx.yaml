@@ -64,6 +64,11 @@ data:
         keepalive 10;
       }
 
+      upstream istiodocs {
+        server    istiodocs-v01.firebaseapp.com:443;
+        keepalive 10;
+      }
+
       server {
         server_name istio.io;
         listen 443 ssl http2;
@@ -86,10 +91,19 @@ data:
 
         # Proxy to past versioned instances of the site.
         location ~ ^/v-[0-9]+\.[0-9]+.*$ {
+          proxy_set_header Host istiodocs-v01.firebaseapp.com;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_cache      off;
-          proxy_pass       https://istiodocs-v01.firebaseapp.com:443;
+          proxy_set_header Connection "";
+
+          add_header       X-Cache-Status $upstream_cache_status;
+          proxy_cache      cache;
+
+          proxy_ssl_name   istiodocs-v01.firebaseapp.com;
+          proxy_pass       https://istiodocs;
+
+          proxy_ssl_verify on;
+          proxy_ssl_trusted_certificate /cacerts/GeoTrust_Global_CA.pem;
         }
 
         # Proxy to the real site.
