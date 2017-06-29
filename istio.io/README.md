@@ -145,10 +145,15 @@ configuration and certs.
 
 - Automatic method: *TODO*
 
-Trusted CA certificate for backend (istio.github.io) verification is downloaded
-from [DigiCert](https://www.digicert.com/digicert-root-certificates.htm)
-and stored as a kubernetes secret.
+Download trusted CA certificates for backend (e.g. istio.github.io)
+verification and store as a kubernetes secret.
 
 	curl -O https://www.digicert.com/CACerts/DigiCertHighAssuranceEVRootCA.crt
+        curl -O https://www.geotrust.com/resources/root_certificates/certificates/GeoTrust_Global_CA.pem
+
 	openssl x509 -inform DER -in DigiCertHighAssuranceEVRootCA.crt -outform PEM -out DigiCertHighAssuranceEVRootCA.pem
-	kubectl create secret generic cacerts --from-file=DigiCertHighAssuranceEVRootCA.pem --dry-run -o yaml > secret-cacerts.yaml
+
+	kubectl create secret generic cacerts \
+                --from-file=DigiCertHighAssuranceEVRootCA.pem \
+                --from-rile=GeoTrust_Global_CA.pem \
+                --dry-run -o yaml > secret-cacerts.yaml
