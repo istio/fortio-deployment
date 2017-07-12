@@ -91,7 +91,7 @@ data:
 
         # Proxy version prefixed URL to versioned instances of
         # https://istio.io/docs/ and corresponding css/js/image
-        location ~ ^/v-[0-9]+\.[0-9]+(/docs|/js|/img|/css)(/|$) {
+        location ~ ^/v-[0-9]+\.[0-9]+/(docs|js|img|css)(/|$) {
           proxy_set_header Host istiodocs-v01.firebaseapp.com;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
