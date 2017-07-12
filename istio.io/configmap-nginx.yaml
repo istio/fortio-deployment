@@ -91,9 +91,7 @@ data:
 
         # Proxy version prefixed URL to versioned instances of
         # https://istio.io/docs/ and corresponding css/js/image
-        location ~ ^/v-[0-9]+\.[0-9]+(/|/docs/?.*|/js/.*|/img/.*|/css/.*)?$ {
-          rewrite ^(/v-[0-9]+\.[0-9])/?$ $1/docs/ redirect;
-
+        location ~ ^/v-[0-9]+\.[0-9]+(/docs|/js|/img|/css)(/|$) {
           proxy_set_header Host istiodocs-v01.firebaseapp.com;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
@@ -118,7 +116,7 @@ data:
           # Redirect all version prefixed URLs for non-documentation to
           # the latest and greatest version of the site, e.g. faq,
           # blogs.
-          rewrite ^/v-[0-9]+\.[0-9](.*)$ https://istio.io$1 last;
+          rewrite ^/v-[0-9]+\.[0-9]+(/?.*)$ https://istio.io$1 last;
 
           proxy_set_header Host istio.io;
           proxy_set_header X-Real-IP $remote_addr;
