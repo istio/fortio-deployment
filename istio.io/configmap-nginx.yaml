@@ -139,14 +139,6 @@ data:
         }
       }
 
-      # return 404 for any unknown servers (i.e. subdomains).
-      server {
-          listen 80 default_server;
-          listen 443 ssl http2 default_server;
-          server_name _;
-          return 404;
-      }
-
       # Make sure www.istio.io redirects to istio.io. This should be
       # handled by DNS and proper website URLs, but handle at proxy as
       # fallback.
@@ -235,5 +227,13 @@ data:
           add_header       X-Cache-Status $upstream_cache_status;
           proxy_cache      off;
         }
+      }
+
+      # return 404 for any unknown servers (i.e. subdomains).
+      server {
+          listen 80 default_server;
+          listen 443 ssl http2 default_server;
+          server_name _;
+          return 404;
       }
     }
