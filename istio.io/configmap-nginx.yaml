@@ -112,9 +112,9 @@ data:
         # `istio.github.io` so that any relative redirects it generates on
         # the github side are to the vanity domain.  DNS points the vanity
         # domain at this nginx.
-        location /v-0.2/ {
+        location /v0.2/ {
           # redirect 0.2 versioned docs to istio.github.io master branch
-          rewrite ^/v-0.2(.*) $1 break;
+          rewrite ^/v0.2(.*) $1 break;
 
           proxy_set_header Host istio.io;
           proxy_set_header X-Real-IP $remote_addr;
