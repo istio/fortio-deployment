@@ -74,7 +74,7 @@ load and desired reliability.
 
 ### DNS and addresses
 
-Cloud DNS is used easy automatic management of DNS records,
+Cloud DNS is used for easy automatic management of DNS records,
 e.g. auto-certificate renewal via DNS challenge with ACMA client can
 be easily integrated into cluster.
 
@@ -125,7 +125,7 @@ before completing verification as it may take some time for DNS
 changes to propogate and be picked up by Let's Encrypt's verification
 server.
 
-    sudo certbot-auto certonly --manual -d istio.io,testing.istio.io,www.istio.io,velodrome.istio.io --preferred-challenges=dns
+    sudo certbot-auto certonly --manual -d istio.io,testing.istio.io,www.istio.io,velodrome.istio.io,prow.istio.io --preferred-challenges=dns
 
 Backup current certificate secret in case changes need to be rolled
 back.

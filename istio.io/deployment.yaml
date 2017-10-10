@@ -55,6 +55,9 @@ spec:
           httpGet:
             path: /_healthz
             port: 80
+            httpHeaders:
+              - name: Host
+                value: istio.io
           initialDelaySeconds: 3
           timeoutSeconds: 2
           failureThreshold: 2
