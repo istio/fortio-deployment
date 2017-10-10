@@ -14,6 +14,7 @@ import socket
 import subprocess
 import unittest
 import urllib
+import ssl
 
 import yaml
 
@@ -29,7 +30,7 @@ def do_get(url):
     if parsed.scheme == 'http':
         conn = httplib.HTTPConnection(TARGET_IP)
     elif parsed.scheme == 'https':
-        conn = httplib.HTTPSConnection(TARGET_IP)
+        conn = httplib.HTTPSConnection(TARGET_IP, timeout=8, context=ssl._create_unverified_context())
     conn.request('GET', path, headers={'Host': parsed.netloc})
     resp = conn.getresponse()
     body = resp.read().decode('utf8')
@@ -71,9 +72,9 @@ class RedirTest(unittest.TestCase):
                 'http://istio.io' + path, 'https://istio.io' + path, 301)
 
     def test_go_get(self):
-        self.assert_redirect('http://istio.io/manager?go-get=1',
-                             'https://istio.io/manager?go-get=1', 301)
-        self.assert_code('https://istio.io/manager?go-get=1', 200)
+        self.assert_redirect('http://istio.io/fortio?go-get=1',
+                             'https://istio.io/fortio?go-get=1', 301)
+        self.assert_code('https://istio.io/fortio?go-get=1', 200)
 
 
 class ContentTest(unittest.TestCase):
@@ -96,7 +97,7 @@ class ContentTest(unittest.TestCase):
     def test_go_get(self):
         base = 'https://istio.io' # because everything ends up there
         suff = '%d?go-get=1' % rand_num()
-        for pkg in ('manager', 'mixer'):
+        for pkg in ('pilot', 'mixer', 'istio', 'fortio'):
             self.assert_body_configmap('%s/%s/%s' % (base, pkg, suff),
                 'golang/%s.html' % pkg)
         resp, body = do_get(base + '/foobar/123?go-get=1')
