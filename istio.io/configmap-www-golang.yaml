@@ -39,3 +39,8 @@ data:
       <meta name="go-import" content="istio.io/broker git https://github.com/istio/broker">
       <meta name="go-source" content="istio.io/broker     https://github.com/istio/broker https://github.com/istio/broker/tree/master{/dir} https://github.com/istio/broker/blob/master{/dir}/{file}#L{line}">
     </head></html>
+  fortio.html: |
+    <html><head>
+      <meta name="go-import" content="istio.io/fortio git https://github.com/istio/fortio">
+      <meta name="go-source" content="istio.io/fortio     https://github.com/istio/fortio https://github.com/istio/fortio/tree/master{/dir} https://github.com/istio/fortio/blob/master{/dir}/{file}#L{line}">
+    </head></html>
