@@ -83,7 +83,6 @@ be easily integrated into cluster.
     istio.io.                          A      300    35.185.199.142
     istio.io.                          NS     21600  ns-cloud-e1.googledomains.com.,ns-cloud-e2.googledomains.com.,ns-cloud-e3.googledomains.com.,ns-cloud-e4.googledomains.com.
     istio.io.                          SOA    21600  ns-cloud-e1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300
-    testing.istio.io.                  CNAME  300    istio.io.
     www.istio.io.                      CNAME  300    istio.io.
 
 Two public ipv4 addresses are used for istio.io: `istio-io-prod` for
@@ -125,7 +124,7 @@ before completing verification as it may take some time for DNS
 changes to propogate and be picked up by Let's Encrypt's verification
 server.
 
-    sudo certbot-auto certonly --manual -d istio.io,testing.istio.io,www.istio.io,velodrome.istio.io,prow.istio.io --preferred-challenges=dns
+    sudo certbot-auto certonly --manual -d istio.io,www.istio.io,velodrome.istio.io,prow.istio.io --preferred-challenges=dns
 
 Backup current certificate secret in case changes need to be rolled
 back.
