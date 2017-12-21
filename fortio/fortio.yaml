@@ -1,0 +1,57 @@
+---
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-report
+spec:
+  ports:
+  - port: 8080
+    name: http-report
+  selector:
+    app: fortio-report
+---
+# Deployment (volume definition is in fortio-volume.yaml)
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fortio-report-deployment
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # a unique name is generated from the deployment name
+      labels:
+        app: fortio-report
+    spec:
+      containers:
+      - name: fortio-report
+        image: google/cloud-sdk
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+              - name: fortio-persistent-storage
+                mountPath: /var/lib/istio/fortio
+                #readOnly: true
+        args:
+          - report # report only (readonly) mode
+      volumes:
+      - name: fortio-persistent-storage
+        persistentVolumeClaim:
+          claimName: fortio-data
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: istio
+  name: istio-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /.*
+            backend:
+              serviceName: fortio-report
+              servicePort: http-report
+---
