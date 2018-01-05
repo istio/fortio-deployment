@@ -15,6 +15,7 @@ else
   cd $GITDIR
 fi
 
+FILESTOPATCH=(_includes/nav.html index.html)
 for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
@@ -22,8 +23,14 @@ do
 	echo "Building '$NAME' from $TAG"
   git checkout $TAG
   echo "baseurl: /$NAME" > config_override.yml
+  for f in "${FILESTOPATCH[@]}"
+  do
+    mv  $f $f.orig
+    sed -e "s/>Istio/>Istio Archive $NAME/" < $f.orig > $f
+  done
   bundle exec jekyll build --config _config.yml,config_override.yml
   rm config_override.yml
+  git checkout -- .
   rm -rf ../public/$NAME
   mv _site ../public/$NAME
 done
