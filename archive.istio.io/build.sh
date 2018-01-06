@@ -34,7 +34,7 @@ for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
   TAG=$(echo $rel | cut -d : -f 2)
-	echo "Building '$NAME' from $TAG"
+	echo "### Building '$NAME' from $TAG"
   git checkout -- .
   git clean -f
   git checkout $TAG
@@ -52,6 +52,9 @@ do
   rm -rf ../public/$NAME
   mv _site ../public/$NAME
   VERSIONS_LIST="${VERSIONS_LIST}<li><a href='$NAME\/'>$NAME<\/a><\/li>"
+  # will be the last one that wins, we just remove the v0.x from the 404 page
+  sed -e "s/ $NAME</</" < ../public/$NAME/404.html > ../public/404.html 2> /dev/null && \
+  echo "*** Patched 404.html from $NAME"
 done
 sed -e "s/VERSIONS_LIST/$VERSIONS_LIST/" < ../index.html.in > ../public/index.html
 echo "All done!"

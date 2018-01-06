@@ -1,4 +1,5 @@
 istio.github.io
 public/v*
 public/index.html
-firebase.debug.log
+public/404.html
+firebase-debug.log
