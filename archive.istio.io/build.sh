@@ -29,7 +29,6 @@ else
 fi
 
 FILESTOPATCH=(_includes/nav.html _includes/header.html index.html)
-mkdir ../public 2> /dev/null
 rm ../public/versions.txt 2> /dev/null
 for rel in "${TOBUILD[@]}"
 do
@@ -54,6 +53,4 @@ do
   mv _site ../public/$NAME
   echo $NAME >> ../public/versions.txt
 done
-cp ../index.html ../public/index.html
-cp ../404.html ../public/index.html
 echo "All done!"
