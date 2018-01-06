@@ -6,22 +6,13 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "redirects": [ {
-      "source" : "/v0.3/about",
-      "destination" : "/v0.3/about.html",
-      "type" : 301
-    }, {
-      "source" : "/v0.4/about",
-      "destination" : "/v0.4/about.html",
-      "type" : 301
-    }
-    ],
     "headers": [ {
       "source" : "**/*.@(txt|xml|json)",
       "headers" : [ {
         "key" : "Access-Control-Allow-Origin",
         "value" : "*"
      } ]
-   } ]
+   } ],
+   "cleanUrls": true
  }
 }
