@@ -30,6 +30,7 @@ fi
 
 FILESTOPATCH=(_includes/nav.html _includes/header.html index.html)
 VERSIONS_LIST=""
+mkdir ../public 2> /dev/null
 for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
