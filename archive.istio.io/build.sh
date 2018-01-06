@@ -31,6 +31,7 @@ fi
 FILESTOPATCH=(_includes/nav.html _includes/header.html index.html)
 VERSIONS_LIST=""
 mkdir ../public 2> /dev/null
+rm ../public/versions.txt 2> /dev/null
 for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
@@ -52,6 +53,7 @@ do
   git clean -f
   rm -rf ../public/$NAME
   mv _site ../public/$NAME
+  echo $NAME >> ../public/versions.txt
   VERSIONS_LIST="${VERSIONS_LIST}<li><a href='$NAME\/'>$NAME<\/a><\/li>"
   # will be the last one that wins, we just remove the v0.x from the 404 page
   sed -e "s/ $NAME</</" < ../public/$NAME/404.html > ../public/404.html 2> /dev/null && \

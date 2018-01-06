@@ -15,6 +15,13 @@
       "destination" : "/v0.4/about.html",
       "type" : 301
     }
-    ]
-  }
+    ],
+    "headers": [ {
+      "source" : "**/*.@(txt|xml|json)",
+      "headers" : [ {
+        "key" : "Access-Control-Allow-Origin",
+        "value" : "*"
+     } ]
+   } ]
+ }
 }
