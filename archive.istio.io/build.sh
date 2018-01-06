@@ -28,23 +28,27 @@ else
   cd $GITDIR
 fi
 
-FILESTOPATCH=(_includes/nav.html index.html)
+FILESTOPATCH=(_includes/nav.html _includes/header.html index.html)
 VERSIONS_LIST=""
 for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
   TAG=$(echo $rel | cut -d : -f 2)
 	echo "Building '$NAME' from $TAG"
+  git checkout -- .
+  git clean -f
   git checkout $TAG
+  git pull 2> /dev/null
   echo "baseurl: /$NAME" > config_override.yml
   for f in "${FILESTOPATCH[@]}"
   do
-    mv  $f $f.orig
-    sed -e "s/>Istio/>Istio Archive $NAME/" < $f.orig > $f
+    mv  $f $f.orig 2> /dev/null && \
+    sed -e "s/>Istio/>Istio <span style='font-size: 0.6em;'>Archive $NAME<\/span>/" < $f.orig > $f && \
+    echo "*** Succesfully patched $f for $NAME"
   done
   bundle exec jekyll build --config _config.yml,config_override.yml
-  rm config_override.yml
   git checkout -- .
+  git clean -f
   rm -rf ../public/$NAME
   mv _site ../public/$NAME
   VERSIONS_LIST="${VERSIONS_LIST}<li><a href='$NAME\/'>$NAME<\/a><\/li>"
