@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="istio.io archives">
-    <meta name="og:title" content="istio.io archives">
+    <meta name="title" content="Search Results">
+    <meta name="og:title" content="Search Results">
     <meta name="og:image" content="./v0.5/img/logo.png"/>
     <meta name="theme-color" content="#466BB0"/>
-    <meta name="description" content="Archives of the istio.io website for each release.">
-    <meta name="og:description" content="Archives of the istio.io website for each release.">
+    <meta name="description" content="Search Results.">
+    <meta name="og:description" content="Search Results.">
 
-    <title>istio.io archives</title>
-<script> window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date; ga('create', 'UA-98480406-2', 'auto'); ga('send', 'pageview'); </script> <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <title>Search Results</title>
+
     <link rel="shortcut icon" href="./v0.5/favicons/favicon.ico">
     <link rel="apple-touch-icon" href="./v0.5/favicons/apple-touch-icon-180x180.png" sizes="180x180">
     <link rel="icon" type="image/png" href="./v0.5/favicons/favicon-16x16.png" sizes="16x16">
@@ -40,6 +40,7 @@
             <img class="logo" src="./v0.5/img/istio-logo.svg" alt="Istio Logo"/>
             <span class="brand-name">Istioldies</span>
         </a>
+
         <form name="cse" id="searchbox" class="form-inline justify-content-end" role="search">
             <input type="hidden" name="cx" value="013699703217164175118:iwwf17ikgf4" />
             <input type="hidden" name="ie" value="utf-8" />
@@ -52,47 +53,60 @@
     </nav>
 </header>
 
-<div class="container-fluid">
-    <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-6 col-md-3 col-xl-2 sidebar-offcanvas">
-        </div>
+<style>
+.gsc-table-cell-snippet-close, .gsc-table-cell-snippet-open {
+    padding: 6px;
+}
 
-        <div class="col-12 col-md-9 col-xl-10">
+td {
+    border: 0;
+}
 
+table {
+    border: 0;
+}
+</style>
+
+<div class="container-fluid search-results">
+    <div class="row">
+        <div class="col-12 col-md-1"></div>
+        <div class="col-12 col-md-10">
             <main role="main">
-                <h1>istio.io archives</h1>
-
-                <p>Archives of the <a href="https://istio.io">istio.io</a> website for each release.</p>
-
-                <ul id="archiveList">
-                </ul>
-
-                <p>Copyright &copy; 2018 Istio Authors
                 <script>
-                    fetch('https://archive.istio.io/versions.txt')
-                            .then(response => response.text())
-                            .then(data => {
-                                var e = document.getElementById('archiveList');
-                                var lines = data.split("\n");
-                                for (var i in lines) {
-                                    if (lines[i] == "") {
-                                        continue;
-                                    }
-                                    var li = e.appendChild(document.createElement("li"));
-                                    var a = li.appendChild(document.createElement("a"));
-                                    a.setAttribute("href", "https://archive.istio.io/" + lines[i] + "/");
-                                    a.appendChild(document.createTextNode("Archive " + lines[i]));
-                                }
-                            });
+                    (function () {
+                        var cx = '013699703217164175118:iwwf17ikgf4';
+                        var gcse = document.createElement('script');
+                        gcse.type = 'text/javascript';
+                        gcse.async = true;
+                        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(gcse, s);
+                    })();
                 </script>
+                <gcse:searchresults-only></gcse:searchresults-only>
             </main>
         </div>
+        <div class="col-12 col-md-1"></div>
     </div>
 </div>
 
-<!-- libraries we pull in -->
+<script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    var q = getParameterByName('q', window.location.href);
+    document.getElementsByName('q')[0].value = q;
+</script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
