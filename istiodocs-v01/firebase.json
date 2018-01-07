@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "redirects": [ {
+      "source" : "/**",
+      "destination" : "https://archive.istio.io/v0.1/docs/",
+      "type" : 301
+    }
+    ]
+  }
+}
