@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="https://schema.org/WebPage">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="istio.io Archives">
+    <meta name="og:title" content="istio.io Archives">
+    <meta name="og:image" content="./v0.5/img/logo.png"/>
+    <meta name="theme-color" content="#466BB0"/>
+    <meta name="description" content="Archives of the istio.io website for each release.">
+    <meta name="og:description" content="Archives of the istio.io website for each release.">
+
+    <title>istio.io Archives</title>
+
+    <link rel="shortcut icon" href="./v0.5/favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="./v0.5/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-36x36.png" sizes="36x36">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-48x48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-72x72.png" sizes="72x72">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-96x196.png" sizes="96x196">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-144x144.png" sizes="144x144">
+    <link rel="icon" type="image/png" href="./v0.5/favicons/android-192x192.png" sizes="192x192">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./v0.5/css/all.css">
+</head>
+
+<body class="language-unknown">
+
+<header role="banner">
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand d-flex w-50 mr-auto" href="/" style="visibility: visible">
+            <img class="logo" src="./v0.5/img/istio-logo.svg" alt="Istio Logo"/>
+            <span class="brand-name">Istio</span>
+            <span class="archive">ldies</span>
+        </a>
+    </nav>
+</header>
+
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-6 col-md-3 col-xl-2 sidebar-offcanvas">
+        </div>
+
+        <div class="col-12 col-md-9 col-xl-10">
+
+            <main role="main">
+                <h1>istio.io Archives</h1>
+
+                <p>Archives of the <a href="https://istio.io">istio.io</a> website for each release.</p>
+
+                <ul id="archiveList">
+                </ul>
+
+                <p>Copyright &copy; Istio Authors
+                <script>
+                    fetch('https://archive.istio.io/versions.txt')
+                            .then(response => response.text())
+                            .then(data => {
+                                var e = document.getElementById('archiveList');
+                                var lines = data.split("\n");
+                                for (var i in lines) {
+                                    if (lines[i] == "") {
+                                        continue;
+                                    }
+                                    var li = e.appendChild(document.createElement("li"));
+                                    var a = li.appendChild(document.createElement("a"));
+                                    a.setAttribute("href", "https://archive.istio.io/" + lines[i] + "/");
+                                    a.appendChild(document.createTextNode("Archive " + lines[i]));
+                                }
+                            });
+                </script>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- libraries we pull in -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+</body>
+</html>
