@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio:0.5.2-pre1
+        image: istio/fortio
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -45,6 +45,8 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: istio
+# not working:
+#    kubernetes.io/ingress.global-static-ip-name: fortio-prod-ip
   name: istio-ingress
 spec:
   rules:
