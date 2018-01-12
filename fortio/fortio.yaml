@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio
+        image: istio/fortio:0.6.1-pre1
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -40,20 +40,33 @@ spec:
         persistentVolumeClaim:
           claimName: fortio-data
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+# Service definition
+apiVersion: v1
+kind: Service
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: istio
-# not working:
-#    kubernetes.io/ingress.global-static-ip-name: fortio-prod-ip
-  name: istio-ingress
+  name: fortio-debug
 spec:
-  rules:
-    - http:
-        paths:
-          - path: /.*
-            backend:
-              serviceName: fortio-report
-              servicePort: http-report
+  ports:
+  - port: 8080
+    name: http-debug
+  selector:
+    app: fortio-debug
 ---
+# Deployment (volume definition is in fortio-volume.yaml)
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fortio-debug-deployment
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # a unique name is generated from the deployment name
+      labels:
+        app: fortio-debug
+    spec:
+      containers:
+      - name: fortio-debug
+        image: istio/fortio
+        ports:
+        - containerPort: 8080
