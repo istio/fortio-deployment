@@ -8,6 +8,8 @@ spec:
   ports:
   - port: 8080
     name: http-report
+  - port: 8081
+    name: http-redir
   selector:
     app: fortio-report
 ---
@@ -26,9 +28,10 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio:0.6.1-pre1
+        image: istio/fortio:0.6.1-pre3
         ports:
         - containerPort: 8080
+        - containerPort: 8081
         volumeMounts:
               - name: fortio-persistent-storage
                 mountPath: /var/lib/istio/fortio
