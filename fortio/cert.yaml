@@ -48,7 +48,12 @@ spec:
   acme:
     config:
     - http01:
-        ingress: istio-ingress-http
+        # if we give it the right one it adds more specific rules that takeover
+        # ours and thus get 503 UF  because of auth but then we get a sync error
+        # but this one leaks: (TODO)
+        # E0112 03:02:54.090362       1 prepare.go:158] Error cleaning up solver: [istio.fortio.org] Error cleaning up ingress: error cleaning up ingress: Ingress.extensions "cert-manager-temp-ingress" is invalid: spec.rules[0].http.paths: Required value
+        # so "make cleanup" is needed after
+        ingress: cert-manager-temp-ingress
       domains:
       - fortio.istio.io
       - istio.fortio.org
@@ -87,10 +92,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: istio
     certmanager.k8s.io/acme-challenge-type: http01
-    certmanager.k8s.io/issuer: letsencrypt-staging
+    certmanager.k8s.io/issuer: letsencrypt-prod
 # not working:
 #    kubernetes.io/ingress.global-static-ip-name: fortio-prod-ip
-  name: istio-ingress-certs
+  name: istio-ingress-certs-mgr
   namespace: istio-system
 spec:
   rules:
