@@ -28,10 +28,10 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio:0.6.1-pre3
+        image: istio/fortio
         ports:
-        - containerPort: 8080
-        - containerPort: 8081
+        - containerPort: 8080 # main serving port
+        - containerPort: 8081 # redirection to https port
         volumeMounts:
               - name: fortio-persistent-storage
                 mountPath: /var/lib/istio/fortio
