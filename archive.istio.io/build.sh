@@ -43,7 +43,8 @@ do
   for f in "${FILESTOPATCH[@]}"
   do
     mv  $f $f.orig 2> /dev/null && \
-    sed -e "s/>Istio/>Istio <span style='font-size: 0.6em;'>Archive $NAME<\/span>/" < $f.orig > $f && \
+    ( grep -v "include search-box.html" $f.orig | 
+    sed -e "s/>Istio/>Istio <span style='font-size: 0.6em;'>Archive $NAME<\/span>/" > $f ) && \
     echo "*** Succesfully patched $f for $NAME"
   done
   bundle exec jekyll build --config _config.yml,config_override.yml
