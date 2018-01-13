@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio
+        image: istio/fortio:latest
         ports:
         - containerPort: 8080 # main serving port
         - containerPort: 8081 # redirection to https port
@@ -70,6 +70,6 @@ spec:
     spec:
       containers:
       - name: fortio-debug
-        image: istio/fortio
+        image: istio/fortio:latest
         ports:
         - containerPort: 8080
