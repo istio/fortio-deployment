@@ -28,7 +28,7 @@ else
   cd $GITDIR
 fi
 
-FILESTOPATCH=(_includes/nav.html _includes/header.html index.html)
+FILESTOPATCH=(_includes/nav.html _includes/header.html _layouts/base.html index.html)
 rm ../public/versions.txt 2> /dev/null
 for rel in "${TOBUILD[@]}"
 do
@@ -43,7 +43,8 @@ do
   for f in "${FILESTOPATCH[@]}"
   do
     mv  $f $f.orig 2> /dev/null && \
-    sed -e "s/>Istio/>Istio <span style='font-size: 0.6em;'>Archive $NAME<\/span>/" < $f.orig > $f && \
+    ( grep -v "include search-box.html" $f.orig |
+    sed -e "s/>Istio/>Istio <span style='font-size: 0.6em;'>Archive $NAME<\/span>/" -e "s/UA-98480406-1/UA-98480406-2/g" > $f ) && \
     echo "*** Succesfully patched $f for $NAME"
   done
   bundle exec jekyll build --config _config.yml,config_override.yml
