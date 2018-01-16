@@ -11,7 +11,7 @@ spec:
     email: ldemailly@google.com
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-staging
+      name: letsencrypt-staging-secret
     # Enable the HTTP-01 challenge provider
     http01: {}
 ---
@@ -28,7 +28,7 @@ spec:
     email: ldemailly@google.com
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-prod-secret
     # Enable the HTTP-01 challenge provider
     http01: {}
 ---
