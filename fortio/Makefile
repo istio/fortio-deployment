@@ -18,6 +18,10 @@ ingress-setup:
 cert-issue:
 	kubectl apply -f cert.yaml
 
+# dangerous
+force-reissue:
+	kubectl delete secret -n istio-system istio-ingress-certs
+
 # TODO: find a way to avoid this (but needed for now because of auth)
 # E0112 03:02:54.090362       1 prepare.go:158] Error cleaning up solver: [istio.fortio.org] Error cleaning up ingress: error cleaning up ingress: Ingress.extensions "cert-manager-temp-ingress" is invalid: spec.rules[0].http.paths: Required value
 cleanup:

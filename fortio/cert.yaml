@@ -53,7 +53,7 @@ spec:
         # but this one leaks: (TODO)
         # E0112 03:02:54.090362       1 prepare.go:158] Error cleaning up solver: [istio.fortio.org] Error cleaning up ingress: error cleaning up ingress: Ingress.extensions "cert-manager-temp-ingress" is invalid: spec.rules[0].http.paths: Required value
         # so "make cleanup" is needed after
-        ingress: cert-manager-temp-ingress
+        ingressClass: not-there
       domains:
       - fortio.istio.io
       - istio.fortio.org
