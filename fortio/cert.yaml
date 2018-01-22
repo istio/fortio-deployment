@@ -48,11 +48,8 @@ spec:
   acme:
     config:
     - http01:
-        # if we give it the right one it adds more specific rules that takeover
-        # ours and thus get 503 UF  because of auth but then we get a sync error
-        # but this one leaks: (TODO)
-        # E0112 03:02:54.090362       1 prepare.go:158] Error cleaning up solver: [istio.fortio.org] Error cleaning up ingress: error cleaning up ingress: Ingress.extensions "cert-manager-temp-ingress" is invalid: spec.rules[0].http.paths: Required value
-        # so "make cleanup" is needed after
+        # This class doesn't exist on purpose so we'll use the less specific
+        # istio ingress one because we need the auth off annotation on the svc
         ingressClass: not-there
       domains:
       - fortio.istio.io
