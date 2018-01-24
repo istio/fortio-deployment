@@ -13,13 +13,13 @@ spec:
   selector:
     app: fortio-report
 ---
-# Deployment (volume definition is in fortio-volume.yaml)
+# Deployment - 2 pods for miminal HA
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: fortio-report-deployment
 spec:
-  replicas: 1 # tells deployment to run 1 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       # a unique name is generated from the deployment name
@@ -32,16 +32,10 @@ spec:
         ports:
         - containerPort: 8080 # main serving port
         - containerPort: 8081 # redirection to https port
-        volumeMounts:
-              - name: fortio-persistent-storage
-                mountPath: /var/lib/istio/fortio
-                #readOnly: true
         args:
           - report # report only (readonly) mode
-      volumes:
-      - name: fortio-persistent-storage
-        persistentVolumeClaim:
-          claimName: fortio-data
+          - -sync
+          - https://storage.googleapis.com/fortio-data?prefix=fortio.istio.io/
 ---
 # Service definition
 apiVersion: v1
