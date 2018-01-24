@@ -35,7 +35,8 @@ spec:
         args:
           - report # report only (readonly) mode
           - -sync
-          - https://storage.googleapis.com/fortio-data?prefix=fortio.istio.io/
+          # http...443 is not a typo, this is to work with egress
+          - http://storage.googleapis.com:443/fortio-data?prefix=fortio.istio.io/
 ---
 # Service definition
 apiVersion: v1
@@ -67,3 +68,14 @@ spec:
         image: istio/fortio:latest
         ports:
         - containerPort: 8080
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: EgressRule
+metadata:
+  name: cloud-storage-egress-rule
+spec:
+  destination:
+    service: "storage.googleapis.com"
+  ports:
+    - port: 443
+      protocol: https
