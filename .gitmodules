@@ -1,4 +1,0 @@
-[submodule "fortio/cert-manager"]
-	path = fortio/cert-manager
-	url = https://github.com/jetstack/cert-manager.git
-	branch = release-0.2

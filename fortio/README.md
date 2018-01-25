@@ -8,13 +8,35 @@ Using envoy directly as the internet facing istio ingress.
 
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
-Intial setup:
+## Initial setup:
+
+One time setup:
+
+- Istio:
 ```
 # Istio 'perf' mode installation:
 sh -c 'sed -e "s/_debug//g" install/kubernetes/istio-auth.yaml | egrep -v -e "- (-v|\"2\")" | kubectl apply -f -'
 ```
 
+- cert-manager
+```
+make cert-setup
+```
+- ingress
+```
+make ingress-setup
+```
+- Get SSL certs:
+```
+make cert-issue
+```
+(check pod logs at each step etc)
+
+## Fortio report app
+
 Install fortio report app:
 ```
-make deploy-fortio
+make deploy-fortio # or just 'make'
 ```
+
+You can also delete the fortio-report pods to upgrade to latest fortio
