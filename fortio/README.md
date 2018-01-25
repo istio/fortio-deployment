@@ -4,7 +4,8 @@ Experimental istio on istio deployment:
 
 fortio.istio.io is running an istio deployment of the `fortio report` application
 
-Using envoy directly as the internet facing istio ingress.
+Using envoy directly as the internet facing istio ingress. SSL certificates are
+automatically provisioned and renewed.
 
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
