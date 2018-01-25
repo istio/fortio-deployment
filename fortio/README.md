@@ -2,10 +2,11 @@
 
 Experimental istio on istio deployment:
 
-[fortio.istio.io](https://fortio.istio.io) is running an istio deployment of the `fortio report` application
+[https://fortio.istio.io/](https://fortio.istio.io/) is running an istio deployment of the `fortio report` application
 
 Using envoy directly as the internet facing istio ingress. SSL certificates are
-automatically provisioned and renewed for multiple domains.
+automatically provisioned and renewed for multiple domains
+([https://istio.fortio.org/](https://istio.fortio.org/) being the second one for the sake of this demonstration).
 
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
