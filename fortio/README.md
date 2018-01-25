@@ -2,10 +2,10 @@
 
 Experimental istio on istio deployment:
 
-fortio.istio.io is running an istio deployment of the `fortio report` application
+[fortio.istio.io](https://fortio.istio.io) is running an istio deployment of the `fortio report` application
 
 Using envoy directly as the internet facing istio ingress. SSL certificates are
-automatically provisioned and renewed.
+automatically provisioned and renewed for multiple domains.
 
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
@@ -14,25 +14,34 @@ The data presented is pulled from a configurable google cloud storage or aws s3 
 One time setup:
 
 - Istio itself
-```
-# Istio 'perf' mode installation:
-sh -c 'sed -e "s/_debug//g" install/kubernetes/istio-auth.yaml | egrep -v -e "- (-v|\"2\")" | kubectl apply -f -'
-```
+  ```
+  # Istio 'perf' mode installation:
+  sh -c 'sed -e "s/_debug//g" install/kubernetes/istio-auth.yaml | egrep -v -e "- (-v|\"2\")" | kubectl apply -f -'
+  ```
 
-- cert-manager
-```
-make cert-setup
-```
-- ingress
-```
-make ingress-setup
-```
+- Cert-manager
+
+  This installs the [cert-manager](https://github.com/jetstack/cert-manager)
+  ```
+  make cert-setup
+  ```
+
+- Ingress
+
+  You can run this step separately for instance if you change ingress rules
+  in ingress.yaml.
+  ```
+  make ingress-setup
+  ```
+
 - Get SSL certs
-you can run this step separately for instance if adding new domains to cert.yaml
-```
-make cert-issue
-```
-(check pod logs at each step etc)
+
+  You can run this step separately for instance if switching from staging to
+  prod or editing cert.yaml to add new domains for instance.
+  ```
+  make cert-issue
+  ```
+  (check pod logs at each step etc)
 
 ## Fortio report app
 
