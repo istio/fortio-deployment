@@ -6,6 +6,7 @@ cert-setup:
 	# TODO: more granular rbac roles
 	-kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 	helm init
+	helm repo update
 	helm install stable/cert-manager
 
 ingress-setup:
@@ -18,4 +19,4 @@ cert-issue:
 #force-reissue:
 #	kubectl delete secret -n istio-system istio-ingress-certs
 
-.PHONY: deploy-fortio volume-setup cert-setup ingress-setup cert-issue
+.PHONY: deploy-fortio cert-setup ingress-setup cert-issue
