@@ -12,7 +12,7 @@ The data presented is pulled from a configurable google cloud storage or aws s3 
 
 One time setup:
 
-- Istio:
+- Istio itself
 ```
 # Istio 'perf' mode installation:
 sh -c 'sed -e "s/_debug//g" install/kubernetes/istio-auth.yaml | egrep -v -e "- (-v|\"2\")" | kubectl apply -f -'
@@ -26,7 +26,8 @@ make cert-setup
 ```
 make ingress-setup
 ```
-- Get SSL certs:
+- Get SSL certs
+you can run this step separately for instance if adding new domains to cert.yaml
 ```
 make cert-issue
 ```
