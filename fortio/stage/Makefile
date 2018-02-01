@@ -1,5 +1,6 @@
 
 # TODO: parametrize the parent directory yaml etc instead of copy pasta
+# on the other hand it is safer to not accidentally damage the prod version.
 
 deploy-fortio:
 	$(ISTIO_DIR)/bin/istioctl kube-inject --debug=false -f fortio.yaml | kubectl apply -f -
@@ -13,10 +14,10 @@ EXTRA_CLUSTER_OPTIONS:=--no-enable-legacy-authorization --enable-autoupgrade --e
 create-cluster:
 	gcloud container clusters create fortio-stage --zone us-west1-c --project $(PROJECT) --machine-type=$(MACHINE_TYPE) --num-nodes=$(NUM_NODES) $(EXTRA_CLUSTER_OPTIONS)
 
-ISTIO_VERSION:=0.4.0
+ISTIO_VERSION:=0.5.0
 ISTIO_DIR:=istio-$(ISTIO_VERSION)
 install-istio:
-	#curl -L https://git.io/getLatestIstio | ISTIO_VERSION=$(ISTIO_VERSION) sh -
+	curl -L https://git.io/getLatestIstio | ISTIO_VERSION=$(ISTIO_VERSION) sh -
 	kubectl apply -f $(ISTIO_DIR)/install/kubernetes/istio-auth.yaml
 
 cert-setup:

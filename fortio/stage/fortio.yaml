@@ -1,6 +1,18 @@
 # TODO: parametrize the parent directory yaml and/or keep in sync when
 # succesfully experimenting here / on -stage sites
 ---
+# first as it's needed at startup for the deployment below
+apiVersion: "config.istio.io/v1alpha2"
+kind: EgressRule
+metadata:
+  name: cloud-storage-egress-rule
+spec:
+  destination:
+    service: "storage.googleapis.com"
+  ports:
+    - port: 443
+      protocol: https
+---
 # Service definition
 apiVersion: v1
 kind: Service
@@ -83,14 +95,3 @@ spec:
         ports:
         - containerPort: 8079 # grpc echo
         - containerPort: 8080 # http echo/debug
----
-apiVersion: "config.istio.io/v1alpha2"
-kind: EgressRule
-metadata:
-  name: cloud-storage-egress-rule
-spec:
-  destination:
-    service: "storage.googleapis.com"
-  ports:
-    - port: 443
-      protocol: https
