@@ -16,7 +16,7 @@ Before making any change here, you must try the changes in [stage/](stage/) firs
 
 One time setup:
 
-- 3 Nodes 1 vCPU elastic cluster `istio-prod` (can be redone for `istio-stage` but must stay permanently including upgrasdes to be tested on stage first, for the prod one)
+- 3 Nodes 1 vCPU elastic cluster `istio-prod` (can be redone for `istio-stage` but must stay permanently including upgrades to be tested on stage first, for the prod one)
 
 - Istio itself
   ```
