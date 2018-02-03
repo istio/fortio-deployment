@@ -2,7 +2,7 @@
 
 Experimental istio on istio deployment:
 
-[https://fortio.istio.io/](https://fortio.istio.io/) is running an istio deployment of the `fortio report` application
+[https://fortio.istio.io/](https://fortio.istio.io/) is running an istio deployment of the `fortio report` application used to serve performance results.
 
 Using envoy directly as the internet facing istio ingress. SSL certificates are
 automatically provisioned and renewed for multiple domains
@@ -10,9 +10,13 @@ automatically provisioned and renewed for multiple domains
 
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
+Before making any change here, you must try the changes in [stage/](stage/) first.
+
 ## Initial setup:
 
 One time setup:
+
+- 3 Nodes 1 vCPU elastic cluster `istio-prod` (can be redone for `istio-stage` but must stay permanently including upgrades to be tested on stage first, for the prod one)
 
 - Istio itself
   ```

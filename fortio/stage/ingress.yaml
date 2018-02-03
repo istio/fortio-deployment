@@ -1,0 +1,77 @@
+# TODO: parametrize the parent directory yaml and/or keep in sync when
+# succesfully experimenting here / on -stage sites
+# https version:
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: istio
+# Not working:
+#    kubernetes.io/ingress.global-static-ip-name: fortio-prod-ip
+# Also not working:
+    kubernetes.io/ingress.allow-http: "false"
+  name: istio-ingress-https
+spec:
+  tls:
+    - secretName: istio-ingress-certs # currently ignored/must be this
+  rules:
+  - http:
+      paths:
+      - path: /debug
+        backend:
+          serviceName: fortio-debug
+          servicePort: http-debug
+      - path: /.*
+        backend:
+          serviceName: fortio-report
+          servicePort: http-report
+    # Unfortunately host isn't an array and there are no "*" allowed for all
+    host: fortio-stage.istio.io
+  - http:
+      paths:
+      - path: /debug
+        backend:
+          serviceName: fortio-debug
+          servicePort: http-debug
+      - path: /.*
+        backend:
+          serviceName: fortio-report
+          servicePort: http-report
+    host: istio-stage.fortio.org
+---
+# http version (and catch all for all hosts/ips/...)
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: istio
+# not working:
+#    kubernetes.io/ingress.global-static-ip-name: fortio-prod-ip
+  name: istio-ingress-http
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /debug
+        backend:
+          serviceName: fortio-debug
+          servicePort: http-debug
+      - path: /.*
+        backend:
+          serviceName: fortio-report
+          servicePort: http-report
+# duplication needed because of #2573
+  - http:
+      paths:
+      - path: /.*
+        backend:
+          serviceName: fortio-report
+          servicePort: http-redir
+    host: fortio-stage.istio.io
+  - http:
+      paths:
+      - path: /.*
+        backend:
+          serviceName: fortio-report
+          servicePort: http-redir
+    host: istio-stage.fortio.org

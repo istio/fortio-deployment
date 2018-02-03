@@ -1,0 +1,97 @@
+# TODO: parametrize the parent directory yaml and/or keep in sync when
+# succesfully experimenting here / on -stage sites
+---
+# first as it's needed at startup for the deployment below
+apiVersion: "config.istio.io/v1alpha2"
+kind: EgressRule
+metadata:
+  name: cloud-storage-egress-rule
+spec:
+  destination:
+    service: "storage.googleapis.com"
+  ports:
+    - port: 443
+      protocol: https
+---
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-report
+spec:
+  ports:
+  - port: 8079
+    name: grpc-ping
+  - port: 8080
+    name: http-report
+  - port: 8081
+    name: http-redir
+  selector:
+    app: fortio-report
+---
+# Deployment - 2 pods for miminal HA
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fortio-report-deployment
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # a unique name is generated from the deployment name
+      labels:
+        app: fortio-report
+    spec:
+      containers:
+      - name: fortio-report
+        image: istio/fortio:latest
+        ports:
+        - containerPort: 8079 # grpc echo
+        - containerPort: 8080 # main serving port
+        - containerPort: 8081 # redirection to https port
+        args:
+          - report # report only (readonly) mode
+          - -sync
+          # http...443 is not a typo, this is to work with egress
+          - http://storage.googleapis.com:443/fortio-data?prefix=fortio.istio.io/
+          #- -loglevel
+          #- verbose
+        volumeMounts:
+          - mountPath: /var/lib/istio/fortio
+            name: fortio-data
+      volumes:
+        - name: fortio-data
+          emptyDir:
+            medium: Memory
+---
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: fortio-debug
+spec:
+  ports:
+  - port: 8080
+    name: http-debug
+  selector:
+    app: fortio-debug
+---
+# Deployment (volume definition is in fortio-volume.yaml)
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fortio-debug-deployment
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # a unique name is generated from the deployment name
+      labels:
+        app: fortio-debug
+    spec:
+      containers:
+      - name: fortio-debug
+        image: istio/fortio:latest
+        ports:
+        - containerPort: 8079 # grpc echo
+        - containerPort: 8080 # http echo/debug
