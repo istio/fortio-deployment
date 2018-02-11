@@ -18,6 +18,8 @@ data:
     <html><head>
       <meta name="go-import" content="istio.io/istio git https://github.com/istio/istio">
       <meta name="go-source" content="istio.io/istio     https://github.com/istio/istio https://github.com/istio/istio/tree/master{/dir} https://github.com/istio/istio/blob/master{/dir}/{file}#L{line}">
+      <meta name="go-import" content="istio.io/istio/vendor git https://github.com/istio-releases/vendor">
+      <meta name="go-source" content="istio.io/istio/vendor     https://github.com/istio-releases/vendor https://github.com/istio-releases/vendor/tree/master{/dir} https://github.com/istio-releases/vendor/blob/master{/dir}/{file}#L{line}">
     </head></html>
   api.html: |
     <html><head>
@@ -43,6 +45,8 @@ data:
     <html><head>
       <meta name="go-import" content="istio.io/fortio git https://github.com/istio/fortio">
       <meta name="go-source" content="istio.io/fortio     https://github.com/istio/fortio https://github.com/istio/fortio/tree/master{/dir} https://github.com/istio/fortio/blob/master{/dir}/{file}#L{line}">
+      <meta name="go-import" content="istio.io/fortio/vendor git https://github.com/istio-releases/fortio-vendor">
+      <meta name="go-source" content="istio.io/fortio/vendor     https://github.com/istio-releases/fortio-vendor https://github.com/istio-releases/fortio-vendor/tree/master{/dir} https://github.com/istio-releases/fortio-vendor/blob/master{/dir}/{file}#L{line}">
     </head></html>
   gogo-genproto.html: |
     <html><head>
