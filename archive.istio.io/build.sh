@@ -11,11 +11,11 @@
 
 # List of name:tagOrBranch - could be read from a file too
 TOBUILD=(
-  v0.1:release-0.1
-  v0.2:release-0.2
-  v0.3:release-0.3
+  v0.5:release-0.5
   v0.4:release-0.4
-  v0.5:master
+  v0.3:release-0.3
+  v0.2:release-0.2
+  v0.1:release-0.1
 )
 
 echo "archives:" > archives.yml
