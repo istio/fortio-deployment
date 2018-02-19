@@ -43,6 +43,9 @@ One time setup:
 
   You can run this step separately for instance if switching from staging to
   prod or editing cert.yaml to add new domains for instance.
+
+  The ingress ip and DNS must match.
+
   ```
   make cert-issue
   ```

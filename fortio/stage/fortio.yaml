@@ -73,6 +73,8 @@ spec:
   ports:
   - port: 8080
     name: http-debug
+  - port: 8079
+    name: grpc-ping
   selector:
     app: fortio-debug
 ---

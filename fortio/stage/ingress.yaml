@@ -21,6 +21,14 @@ spec:
         backend:
           serviceName: fortio-debug
           servicePort: http-debug
+      - path: /fgrpc.PingServer/.*
+        backend:
+          serviceName: fortio-debug
+          servicePort: grpc-ping
+      - path: /grpc.health.v1.Health/Check
+        backend:
+          serviceName: fortio-debug
+          servicePort: grpc-ping
       - path: /.*
         backend:
           serviceName: fortio-report
@@ -63,6 +71,18 @@ spec:
 # duplication needed because of #2573
   - http:
       paths:
+      - path: /debug
+        backend:
+          serviceName: fortio-debug
+          servicePort: http-debug
+      - path: /fgrpc.PingServer/.*
+        backend:
+          serviceName: fortio-debug
+          servicePort: grpc-ping
+      - path: /grpc.health.v1.Health/Check
+        backend:
+          serviceName: fortio-debug
+          servicePort: grpc-ping
       - path: /.*
         backend:
           serviceName: fortio-report
