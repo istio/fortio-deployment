@@ -18,6 +18,8 @@ One time setup:
 
 - 3 Nodes 1 vCPU elastic cluster `istio-prod` (can be redone for `istio-stage` but must stay permanently including upgrades to be tested on stage first, for the prod one)
 
+- Make sure you connect to the corresponding cluster, ie `gcloud container clusters get-credentials fortio-stage --zone us-west1-c --project istio-io`
+
 - Istio itself
   ```
   # Istio 'perf' mode installation:
