@@ -1,3 +1,17 @@
+# TODO: parametrize this yaml and/or keep in sync when
+# succesfully experimenting in stage/ (on -stage sites)
+---
+# first as it's needed at startup for the deployment below
+apiVersion: "config.istio.io/v1alpha2"
+kind: EgressRule
+metadata:
+  name: cloud-storage-egress-rule
+spec:
+  destination:
+    service: "storage.googleapis.com"
+  ports:
+    - port: 443
+      protocol: https
 ---
 # Service definition
 apiVersion: v1
@@ -6,6 +20,8 @@ metadata:
   name: fortio-report
 spec:
   ports:
+  - port: 8079
+    name: grpc-ping
   - port: 8080
     name: http-report
   - port: 8081
@@ -30,6 +46,7 @@ spec:
       - name: fortio-report
         image: istio/fortio:latest
         ports:
+        - containerPort: 8079 # grpc echo
         - containerPort: 8080 # main serving port
         - containerPort: 8081 # redirection to https port
         args:
@@ -56,6 +73,8 @@ spec:
   ports:
   - port: 8080
     name: http-debug
+  - port: 8079
+    name: grpc-ping
   selector:
     app: fortio-debug
 ---
@@ -76,15 +95,5 @@ spec:
       - name: fortio-debug
         image: istio/fortio:latest
         ports:
-        - containerPort: 8080
----
-apiVersion: "config.istio.io/v1alpha2"
-kind: EgressRule
-metadata:
-  name: cloud-storage-egress-rule
-spec:
-  destination:
-    service: "storage.googleapis.com"
-  ports:
-    - port: 443
-      protocol: https
+        - containerPort: 8079 # grpc echo
+        - containerPort: 8080 # http echo/debug
