@@ -2,3 +2,4 @@ istio.github.io
 public/v*
 firebase-debug.log
 .idea
+tmp
