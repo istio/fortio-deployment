@@ -183,7 +183,7 @@ data:
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
           proxy_set_header Connection "";
-          proxy_pass       http://prow;
+          proxy_pass       http://gcsweb;
 
           add_header       X-Cache-Status $upstream_cache_status;
           proxy_cache      off;
