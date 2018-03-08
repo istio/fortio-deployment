@@ -124,7 +124,7 @@ before completing verification as it may take some time for DNS
 changes to propogate and be picked up by Let's Encrypt's verification
 server.
 
-    sudo certbot-auto certonly --manual -d istio.io,www.istio.io,velodrome.istio.io,prow.istio.io --preferred-challenges=dns
+    sudo certbot-auto certonly --manual -d istio.io,www.istio.io,velodrome.istio.io,gcsweb.istio.io,prow.istio.io,preliminary.istio.io --preferred-challenges=dns
 
 Backup current certificate secret in case changes need to be rolled
 back.
