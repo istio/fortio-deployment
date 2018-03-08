@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: gcsweb
-  type: NodePort
   ports:
     - name: http
       port: 80
