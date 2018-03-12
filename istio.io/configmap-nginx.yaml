@@ -109,6 +109,20 @@ data:
           return 301 https://istio.io$request_uri;
       }
 
+      server {
+        server_name istio.io;
+        listen 80;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
+        location / {
+          return 301 https://$server_name$request_uri;
+        }
+      }
+
       # Handle HTTPS.
       upstream current_istio_io {
         server    current-istio-io.firebaseapp.com:443;
@@ -136,18 +150,14 @@ data:
         }
 
         # Proxy to the real site.
-        # We set the host to the vanity domain `istio.io` but proxy to
-        # `current-istio-io.firebaseapp.com` so that any relative
-        # redirects it generates on the firebase side are to the
-        # vanity domain. DNS points the vanity domain at this nginx.
         location / {
-          proxy_set_header Host istio.io;
+          proxy_set_header Host current-istio-io.firebaseapp.com;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
           proxy_set_header Connection "";
 
           proxy_ssl_name   current-istio-io.firebaseapp.com;
-          proxy_pass       https://github;
+          proxy_pass       https://current_istio_io;
 
           proxy_ssl_verify on;
           proxy_ssl_trusted_certificate /cacerts/pki_google_roots.pem;
