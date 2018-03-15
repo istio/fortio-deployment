@@ -13,6 +13,9 @@
 BRANCH=release-0.6
 GITDIR=istio.github.io
 
+# Grab the latest list of releases
+wget https://raw.githubusercontent.com/istio/istio.github.io/master/_data/releases.yml
+
 if [ -d $GITDIR ]; then
   cd $GITDIR
   git fetch
@@ -27,11 +30,13 @@ git clean -f
 git checkout $BRANCH
 git pull 2> /dev/null
 echo "baseurl: " > config_override.yml
+cp ../releases.yml _data
 bundle install
 bundle exec jekyll build --config _config.yml,config_override.yml
 git checkout -- .
 git clean -f
 rm -rf ../public
 mv _site ../public
+rm ../releases.yml
 
 echo "All done!"
