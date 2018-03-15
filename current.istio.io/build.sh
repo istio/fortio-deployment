@@ -10,7 +10,7 @@
 #
 
 # Branch of istio.github.io that should be used to build istio.io
-BRANCH=master
+BRANCH=release-0.6
 GITDIR=istio.github.io
 
 if [ -d $GITDIR ]; then
