@@ -45,7 +45,7 @@ data:
       #
       # Upgrade HTTP to HTTPS.
       server {
-        server_name istio.io;
+        server_name preliminary.istio.io;
         listen 80;
 
         location = /_healthz {
@@ -64,62 +64,22 @@ data:
         keepalive 10;
       }
 
-      upstream istiodocs {
-        server    istiodocs-v01.firebaseapp.com:443;
-        keepalive 10;
-      }
-
       server {
-        server_name istio.io;
+        server_name preliminary.istio.io;
         listen 443 ssl http2;
-
-        if ($arg_go-get = "1") {
-          # This is a go-get operation.
-          # Send any file in any repo to static content.
-          rewrite ^/([^/]*)(/.*)?$  /_golang-go-get/$1.html;
-        }
-
-        location /_golang-go-get {
-          # Serve static content.
-          alias /www/golang;
-        }
 
         location = /_healthz {
           add_header Content-Type text/plain;
           return 200 "ok\n";
         }
 
-        # Proxy version prefixed URL to versioned instances of
-        # https://istio.io/docs/ and corresponding css/js/image
-        location ~ ^/v-[0-9]+\.[0-9]+/(docs|js|img|css)(/|$) {
-          proxy_set_header Host istiodocs-v01.firebaseapp.com;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_set_header Connection "";
-
-          add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      cache;
-
-          proxy_ssl_name   istiodocs-v01.firebaseapp.com;
-          proxy_pass       https://istiodocs;
-
-          proxy_ssl_verify on;
-          proxy_ssl_trusted_certificate /cacerts/pki_google_roots.pem;
-        }
-
         # Proxy to the real site.
-        # We set the host to the vanity domain `istio.io` but proxy to
+        # We set the host to the vanity domain `preliminary.istio.io` but proxy to
         # `istio.github.io` so that any relative redirects it generates on
         # the github side are to the vanity domain.  DNS points the vanity
         # domain at this nginx.
         location / {
-          # Redirect all version prefixed URLs for non-documentation to
-          # the latest and greatest version of the site, e.g. faq,
-          # blogs.
-          # rewrite ^/v-[0-9]+\.[0-9]+$ https://istio.io last;
-          rewrite ^/v-[0-9]+\.[0-9]+($|/.*$) https://istio.io$1 last;
-
-          proxy_set_header Host istio.io;
+          proxy_set_header Host preliminary.istio.io;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $remote_addr;
           proxy_set_header Connection "";
@@ -147,6 +107,64 @@ data:
           listen 443 ssl http2;
           server_name www.istio.io;
           return 301 https://istio.io$request_uri;
+      }
+
+      server {
+        server_name istio.io;
+        listen 80;
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
+        location / {
+          return 301 https://$server_name$request_uri;
+        }
+      }
+
+      # Handle HTTPS.
+      upstream current_istio_io {
+        server    current-istio-io.firebaseapp.com:443;
+        keepalive 10;
+      }
+
+      server {
+        server_name istio.io;
+        listen 443 ssl http2;
+
+        if ($arg_go-get = "1") {
+          # This is a go-get operation.
+          # Send any file in any repo to static content.
+          rewrite ^/([^/]*)(/.*)?$  /_golang-go-get/$1.html;
+        }
+
+        location /_golang-go-get {
+          # Serve static content.
+          alias /www/golang;
+        }
+
+        location = /_healthz {
+          add_header Content-Type text/plain;
+          return 200 "ok\n";
+        }
+
+        # Proxy to the real site.
+        location / {
+          proxy_set_header Host current-istio-io.firebaseapp.com;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $remote_addr;
+          proxy_set_header Connection "";
+
+          proxy_ssl_name   current-istio-io.firebaseapp.com;
+          proxy_pass       https://current_istio_io;
+
+          proxy_ssl_verify on;
+          proxy_ssl_trusted_certificate /cacerts/pki_google_roots.pem;
+
+          add_header       X-Cache-Status $upstream_cache_status;
+          proxy_cache      off;
+        }
       }
 
       # gcsweb.istio.io
