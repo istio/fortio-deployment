@@ -11,7 +11,6 @@
 
 # List of name:tagOrBranch
 TOBUILD=(
-  v0.6:master
   v0.5:release-0.5
   v0.4:release-0.4
   v0.3:release-0.3
