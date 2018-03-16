@@ -163,7 +163,7 @@ data:
           proxy_ssl_trusted_certificate /cacerts/pki_google_roots.pem;
 
           add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      off;
+          proxy_cache      cache;
         }
       }
 
