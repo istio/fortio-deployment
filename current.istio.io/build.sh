@@ -10,7 +10,7 @@
 #
 
 # Branch of istio.github.io that should be used to build istio.io
-BRANCH=release-0.6
+BRANCH=release-0.7
 GITDIR=istio.github.io
 
 # Grab the latest list of releases
