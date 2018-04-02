@@ -13,6 +13,6 @@
         "value" : "*"
      } ]
    } ],
-   "cleanUrls": true
+   "cleanUrls": false
  }
 }
