@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: fortio-report
-        image: istio/fortio:latest
+        image: FORTIO_IMAGE
         imagePullPolicy: Always # needed despite what is documented to really get latest
         ports:
         - containerPort: 8079 # grpc echo
@@ -94,8 +94,12 @@ spec:
     spec:
       containers:
       - name: fortio-debug
-        image: istio/fortio:latest
+        image: FORTIO_IMAGE
         imagePullPolicy: Always
         ports:
         - containerPort: 8079 # grpc echo
         - containerPort: 8080 # http echo/debug
+        args:
+          - server
+          - -grpc-max-streams
+          - FORTIO_MAX_STREAMS
