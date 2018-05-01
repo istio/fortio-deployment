@@ -11,6 +11,7 @@ automatically provisioned and renewed for multiple domains
 The data presented is pulled from a configurable google cloud storage or aws s3 bucket.
 
 Before making any change here, you must try the changes in [stage/](stage/) first.
+Note that stage is also where [fortio-daily.istio.io](https://fortio-daily.istio.io/) is running.
 
 ## Initial setup:
 

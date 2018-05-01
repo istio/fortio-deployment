@@ -43,6 +43,7 @@ ingress-setup:
 	@echo "also check the dns entry matches:"
 	host fortio-stage.istio.io
 	host istio-stage.fortio.org
+	host fortio-daily.istio.io
 
 cert-issue:
 	kubectl apply -f cert.yaml

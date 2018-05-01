@@ -54,7 +54,7 @@ spec:
           - report # report only (readonly) mode
           - -sync
           # http...443 is not a typo, this is to work with egress
-          - http://storage.googleapis.com:443/fortio-data?prefix=fortio.istio.io/
+          - http://storage.googleapis.com:443/fortio-data?prefix=daily.releases/
           #- -loglevel
           #- verbose
         volumeMounts:
