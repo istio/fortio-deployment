@@ -119,6 +119,6 @@ spec:
       paths:
       - path: /.well-known/acme-challenge/.*
         backend:
-          serviceName: cert-manager-ingress2
+          serviceName: cert-manager-ingress3
           servicePort: http-certingr
     host: fortio-daily.istio.io
