@@ -30,6 +30,7 @@ spec:
   dnsNames:
   - fortio-stage.istio.io
   - istio-stage.fortio.org
+  - fortio-daily.istio.io
   acme:
     config:
     - http01:
@@ -39,6 +40,7 @@ spec:
       domains:
       - fortio-stage.istio.io
       - istio-stage.fortio.org
+      - fortio-daily.istio.io
 ---
 apiVersion: v1
 kind: Service
@@ -67,6 +69,20 @@ spec:
     name: http-certingr
   selector:
     certmanager.k8s.io/domain: istio-stage.fortio.org
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cert-manager-ingress3
+  namespace: istio-system
+  annotations:
+    auth.istio.io/8089: NONE
+spec:
+  ports:
+  - port: 8089
+    name: http-certingr
+  selector:
+    certmanager.k8s.io/domain: fortio-daily.istio.io
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -99,3 +115,10 @@ spec:
           serviceName: cert-manager-ingress2
           servicePort: http-certingr
     host: istio-stage.fortio.org
+  - http:
+      paths:
+      - path: /.well-known/acme-challenge/.*
+        backend:
+          serviceName: cert-manager-ingress3
+          servicePort: http-certingr
+    host: fortio-daily.istio.io
