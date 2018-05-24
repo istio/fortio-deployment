@@ -41,62 +41,10 @@ data:
       proxy_cache_use_stale         updating error timeout http_500 http_502 http_503 http_504;
       proxy_cache_background_update on;
 
-      # This is the main site.
-      #
-      # Upgrade HTTP to HTTPS.
-      server {
-        server_name preliminary.istio.io;
-        listen 80;
-
-        location = /_healthz {
-          add_header Content-Type text/plain;
-          return 200 "ok\n";
-        }
-
-        location / {
-          return 301 https://$server_name$request_uri;
-        }
-      }
-
       # Handle HTTPS.
       upstream github {
         server    istio.github.io:443;
         keepalive 10;
-      }
-
-      server {
-        server_name preliminary.istio.io;
-        listen 443 ssl http2;
-
-        location = /_healthz {
-          add_header Content-Type text/plain;
-          return 200 "ok\n";
-        }
-
-        # Proxy to the real site.
-        # We set the host to the vanity domain `preliminary.istio.io` but proxy to
-        # `istio.github.io` so that any relative redirects it generates on
-        # the github side are to the vanity domain.  DNS points the vanity
-        # domain at this nginx.
-        location / {
-          proxy_set_header Host preliminary.istio.io;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_set_header Connection "";
-
-          proxy_ssl_name   istio.github.io;
-          proxy_pass       https://github;
-
-          proxy_ssl_verify on;
-          proxy_ssl_trusted_certificate /cacerts/DigiCertHighAssuranceEVRootCA.pem;
-
-          add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      off;
-          # NGINX-based GitHub Pages don't update Expires header during
-          # cache revalidation, so we have to ignore it, otherwise we're
-          # going to treat most of the responses as uncacheable.
-          proxy_ignore_headers Expires;
-        }
       }
 
       # Make sure www.istio.io redirects to istio.io. This should be
