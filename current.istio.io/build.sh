@@ -29,6 +29,7 @@ git checkout $BRANCH
 git pull 2> /dev/null
 cp ../releases.yml data
 hugo
+rm -fr ../public
 mv public ..
 git checkout -- .
 git clean -f
