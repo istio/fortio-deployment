@@ -11,6 +11,7 @@
 
 # List of name:tagOrBranch
 TOBUILD=(
+  v0.7:release-0.7
   v0.6:release-0.6
   v0.5:release-0.5
   v0.4:release-0.4
@@ -20,7 +21,7 @@ TOBUILD=(
 )
 
 # Grab the latest list of releases
-wget https://raw.githubusercontent.com/istio/istio.github.io/master/_data/releases.yml
+wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.github.io/master/data/releases.yml
 
 GITDIR=istio.github.io
 
