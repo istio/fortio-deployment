@@ -28,7 +28,7 @@ git clean -f
 git checkout $BRANCH
 git pull 2> /dev/null
 cp ../releases.yml data
-hugo
+hugo --baseURL https://istio.io
 rm -fr ../public
 mv public ..
 git checkout -- .
