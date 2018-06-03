@@ -10,6 +10,7 @@
 # Branch of istio.github.io that should be used to build istio.io
 BRANCH=release-0.8
 GITDIR=istio.github.io
+export DEPLOY_URL=https://istio.io
 
 # Grab the latest list of releases
 wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.github.io/master/data/releases.yml
@@ -28,7 +29,8 @@ git clean -f
 git checkout $BRANCH
 git pull 2> /dev/null
 cp ../releases.yml data
-hugo --baseURL https://istio.io
+make prep_generate
+make generate
 rm -fr ../public
 mv public ..
 git checkout -- .
