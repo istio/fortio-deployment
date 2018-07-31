@@ -1,5 +1,5 @@
 [build]
-    publish = "public"
+    publish = "archive.istio.io/public"
     command = "./buildarchive.sh"
 
 [build.environment]
