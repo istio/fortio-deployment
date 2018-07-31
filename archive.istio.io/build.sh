@@ -11,6 +11,10 @@
 
 # List of name:tagOrBranch
 TOBUILD=(
+  v0.8:release-0.8
+)
+
+TOBUILD_JEKYLL=(
   v0.7:release-0.7
   v0.6:release-0.6
   v0.5:release-0.5
@@ -35,6 +39,23 @@ fi
 
 rm ../public/versions.txt 2> /dev/null
 for rel in "${TOBUILD[@]}"
+do
+  NAME=$(echo $rel | cut -d : -f 1)
+  TAG=$(echo $rel | cut -d : -f 2)
+  echo "### Building '$NAME' from $TAG"
+  git checkout -- .
+  git clean -f
+  git checkout $TAG
+  git pull 2> /dev/null
+  make netlify
+  git checkout -- .
+  git clean -f
+  rm -rf ../public/$NAME
+  mv public ../public/$NAME
+  echo $NAME >> ../public/versions.txt
+done
+
+for rel in "${TOBUILD_JEKYLL[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
   TAG=$(echo $rel | cut -d : -f 2)
