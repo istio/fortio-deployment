@@ -50,7 +50,7 @@ do
   git pull 2> /dev/null
 
   npm install -g html-minifier
-  scripts/gen_site.sh "$(BASEURL)"
+  scripts/gen_site.sh "$BASEURL"
 
   git checkout -- .
   git clean -f
