@@ -42,7 +42,7 @@ for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
   TAG=$(echo $rel | cut -d : -f 2)
-  BASEURL=$(echo $URL/$NAME)
+  BASEURL=$(echo /$NAME)
   echo "### Building '$NAME' from $TAG for $BASEURL"
   git checkout -- .
   git clean -f
@@ -50,7 +50,7 @@ do
   git pull 2> /dev/null
 
   npm install -g html-minifier
-  scripts/gen_site.sh "$BASEURL"
+  scripts/gen_site.sh $BASEURL
 
   git checkout -- .
   git clean -f
