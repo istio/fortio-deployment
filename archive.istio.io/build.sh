@@ -42,12 +42,16 @@ for rel in "${TOBUILD[@]}"
 do
   NAME=$(echo $rel | cut -d : -f 1)
   TAG=$(echo $rel | cut -d : -f 2)
-  echo "### Building '$NAME' from $TAG"
+  BASEURL=$(echo $URL/$NAME)
+  echo "### Building '$NAME' from $TAG for $BASEURL"
   git checkout -- .
   git clean -f
   git checkout $TAG
   git pull 2> /dev/null
-  make netlify
+
+  npm install -g html-minifier
+  scripts/gen_site.sh "$(BASEURL)"
+
   git checkout -- .
   git clean -f
   rm -rf ../public/$NAME
