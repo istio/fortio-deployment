@@ -19,8 +19,6 @@ kc get secret/istio.io || create_secret
 
 kc apply \
     -f configmap-nginx.yaml \
-    -f configmap-www-golang.yaml \
-    -f secret-cacerts.yaml \
     -f service-canary.yaml \
     -f deployment.yaml
 
