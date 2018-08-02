@@ -25,17 +25,9 @@ spec:
         configMap:
           name: nginx
           # Map all keys to files.
-      - name: www-golang
-        configMap:
-          name: www-golang
-          # Map all keys to files.
       - name: certs
         secret:
           secretName: istio.io
-          # Map all keys to files.
-      - name: cacerts
-        secret:
-          secretName: cacerts
           # Map all keys to files.
       - name: cache
         emptyDir: {}
@@ -65,14 +57,8 @@ spec:
         - name: nginx
           mountPath: /etc/nginx
           readOnly: true
-        - name: www-golang
-          mountPath: /www/golang
-          readOnly: true
         - name: certs
           mountPath: /certs
-          readOnly: true
-        - name: cacerts
-          mountPath: /cacerts
           readOnly: true
         - name: cache
           mountPath: /cache

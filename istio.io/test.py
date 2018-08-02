@@ -60,49 +60,13 @@ class RedirTest(unittest.TestCase):
         self.assert_scheme_redirect(
             url, expected_loc, expected_code, **kwargs)
 
-    def test_main(self):
-        # Main URL.
-        self.assert_code('https://istio.io', 200)
-        # Protocol upgrade.
-        self.assert_scheme_redirect(
-                'http://istio.io', 'https://istio.io/', 301)
-        path = '/%s' % rand_num()
-        # Protocol upgrade and path.
-        self.assert_scheme_redirect(
-                'http://istio.io' + path, 'https://istio.io' + path, 301)
-
-    def test_go_get(self):
-        self.assert_redirect('http://istio.io/fortio?go-get=1',
-                             'https://istio.io/fortio?go-get=1', 301)
-        self.assert_code('https://istio.io/fortio?go-get=1', 200)
-
-
 class ContentTest(unittest.TestCase):
-    def assert_body_configmap(self, url, filename):
-        print('GET', url)
-        resp, body = do_get(url)
-        self.assertEqual(resp.status, 200)
-        configmap = 'configmap-www-%s.yaml' % os.path.dirname(filename)
-        with open(configmap) as f:
-            expected_body = yaml.load(f)['data'][os.path.basename(filename)]
-        self.assertMultiLineEqual(body, expected_body)
-
     def assert_body_url(self, url, expected_content_url):
         print('GET', url)
         resp, body = do_get(url)
         self.assertEqual(resp.status, 200)
         expected_body = urllib.urlopen(expected_content_url).read()
         self.assertMultiLineEqual(body, expected_body)
-
-    def test_go_get(self):
-        base = 'https://istio.io' # because everything ends up there
-        suff = '%d?go-get=1' % rand_num()
-        for pkg in ('pilot', 'mixer', 'istio', 'fortio'):
-            self.assert_body_configmap('%s/%s/%s' % (base, pkg, suff),
-                'golang/%s.html' % pkg)
-        resp, body = do_get(base + '/foobar/123?go-get=1')
-        self.assertEqual(resp.status, 404)
-
 
 if __name__ == '__main__':
     TARGET_IP = os.environ.get('TARGET_IP')
