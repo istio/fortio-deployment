@@ -4,7 +4,7 @@
 
 
 FORTIO_VERSION:=latest
-FORTIO_IMAGE:=istio/fortio:$(FORTIO_VERSION)
+FORTIO_IMAGE:=fortio/fortio:$(FORTIO_VERSION)
 FORTIO_MAX_STREAMS:=0
 
 deploy-fortio:
