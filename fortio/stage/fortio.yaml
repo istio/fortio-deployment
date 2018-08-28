@@ -60,7 +60,7 @@ spec:
           #- -loglevel
           #- verbose
         volumeMounts:
-          - mountPath: /var/lib/istio/fortio
+          - mountPath: /var/lib/fortio
             name: fortio-data
       volumes:
         - name: fortio-data
