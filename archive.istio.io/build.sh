@@ -43,6 +43,7 @@ do
   git clean -f
   git checkout $TAG
   git pull 2> /dev/null
+  cp ../releases.yml _data
 
   npm install -g html-minifier
   scripts/gen_site.sh $BASEURL
