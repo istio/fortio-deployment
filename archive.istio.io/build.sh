@@ -2,12 +2,7 @@
 #
 # Build the archive site
 #
-# Assumes you have jekyll bundle installed (one time setup
-# https://github.com/istio/istio.github.io#localnative-jekyll-install
-#
-# And you've setup firebase (npm install -g firebase-tools; firebase login)
-# After running this script, push to archive.istio.io with "firebase deploy"
-#
+# Assumes you have Jekyll installed.
 
 # List of name:tagOrBranch
 TOBUILD=(
