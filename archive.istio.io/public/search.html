@@ -4,91 +4,263 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Search Results">
-    <meta name="og:title" content="Search Results">
-    <meta name="og:image" content="./v0.8/img/logo.png"/>
     <meta name="theme-color" content="#466BB0"/>
-    <meta name="description" content="Search Results.">
-    <meta name="og:description" content="Search Results.">
+    <meta name="title" content="Search Results">
+    <meta name="description" content="Search Results">
+    <meta name="keywords" content="microservices,services,mesh">
+    <meta property="og:title" content="Search Results">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Search Results">
+    <meta property="og:image" content="/img/istio-logo-blue-background.svg">
+    <meta property="og:image:alt" content="Istio Logo">
+    <meta property="og:image:width" content="112">
+    <meta property="og:image:height" content="150">
+    <meta property="og:site_name" content="Istio">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@IstioMesh">
 
     <title>Search Results</title>
 
-    <script> window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date; ga('create', 'UA-98480406-2', 'auto'); ga('send', 'pageview'); </script> <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-98480406-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    <link rel="shortcut icon" href="./v0.8/favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="./v0.8/favicons/apple-touch-icon-180x180.png" sizes="180x180">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-36x36.png" sizes="36x36">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-48x48.png" sizes="48x48">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-72x72.png" sizes="72x72">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-96x196.png" sizes="96x196">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-144x144.png" sizes="144x144">
-    <link rel="icon" type="image/png" href="./v0.8/favicons/android-192x192.png" sizes="192x192">
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        gtag('js', new Date());
+        gtag('config', 'UA-98480406-3');
+    </script>
+
+    <script>
+        var branchName = "master";
+        var docTitle = "404 Page not found";
+    </script>
+
+    <link rel="shortcut icon" href="/favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+    <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+    <link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+    <link rel="icon" type="image/png" href="/favicons/android-96x196.png" sizes="96x196">
+    <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+    <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Istio">
+    <meta name="application-name" content="Istio">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Chivo:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Work Sans:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-    <link rel="stylesheet" href="./v0.8/css/light_theme_archive.css">
+
+    <link rel="stylesheet" href="/css/light_theme_archive.css" title="light">
 </head>
 
-<body>
+<body class="language-unknown">
 
-<header role="banner">
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand d-flex w-50 mr-auto" href="/" style="visibility: visible">
-            <img class="logo" src="./v0.8/img/istio-logo.svg" alt="Istio Logo"/>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark justify-content-between">
+
+
+        <a class="navbar-brand" href="/">
+            <span class="logo"><svg viewBox="0 0 300 300">
+<circle cx="150" cy="150" r="150" stroke-width="2"/>
+<polygon points="65,240 225,240 125,270"/>
+<polygon points="65,230 125,220 125,110"/>
+<polygon points="135,220 225,230 135,30"/>
+</svg>
+</span>
+
+
             <span class="brand-name">Istioldies</span>
+
         </a>
 
-        <form name="cse" id="searchbox" class="form-inline justify-content-end" role="search">
-            <input type="hidden" name="cx" value="013699703217164175118:iwwf17ikgf4" />
-            <input type="hidden" name="ie" value="utf-8" />
-            <input type="hidden" name="hl" value="en" />
-            <div class="input-group">
-                <input name="q" class="form-control search-box" type="text" size="30" />
-                <button class="btn btn-search input-group-addon my-2 my-sm-0 fa fa-search" type="submit"></button>
-            </div>
-        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <ul id="navbar-links" class="navbar-nav active">
+                <li class="nav-item">
+                    <a id="search_show" class="nav-link" href="" title='Search istio.io' aria-label="Search"><i style="width: 1em" class="fa fa-lg fa-search"></i></a>
+                </li>
+            </ul>
+
+            <form name="cse" id="search_form" class="form-inline mr-sm-2" role="search">
+                <input type="hidden" name="cx" value="013699703217164175118:iwwf17ikgf4" />
+                <input type="hidden" name="ie" value="utf-8"/>
+                <input type="hidden" name="hl" value="en"/>
+                <input type="hidden" id="search_page_url" value="/search.html"/>
+                <input id="search_textbox" class="form-control" name="q" type="text" aria-label="Search this site"/>
+                <button id="search_close" type="reset" aria-label="Cancel Search"><i class="far fa-lg fa-times-circle"></i></button>
+            </form>
+        </div>
     </nav>
 </header>
 
-<style>
-.gsc-table-cell-snippet-close, .gsc-table-cell-snippet-open {
-    padding: 6px;
-}
+<div class="container-fluid">
+    <div class="row row-offcanvas">
+        <div class="col-0 col-md-3 col-xl-2 sidebar-offcanvas">
 
-td {
-    border: 0;
-}
 
-table {
-    border: 0;
-}
-</style>
-
-<div class="container-fluid search-results">
-    <div class="row">
-        <div class="col-12 col-md-1"></div>
-        <div class="col-12 col-md-10">
-            <main role="main">
-                <script>
-                    (function () {
-                        var cx = '013699703217164175118:iwwf17ikgf4';
-                        var gcse = document.createElement('script');
-                        gcse.type = 'text/javascript';
-                        gcse.async = true;
-                        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-                        var s = document.getElementsByTagName('script')[0];
-                        s.parentNode.insertBefore(gcse, s);
-                    })();
-                </script>
-                <gcse:searchresults-only></gcse:searchresults-only>
-            </main>
         </div>
-        <div class="col-12 col-md-1"></div>
+
+
+        <div class="col-12 col-md-9 col-xl-10">
+
+
+            <main aria-labelledby="title">
+
+
+                <h1 id="title">
+
+                    Search Results
+                </h1>
+
+
+                <style>
+                    .gs-webResult div.gs-visibleUrl-long, .gs-promotion div.gs-visibleUrl-long {
+                        padding-bottom: 0;
+                    }
+
+                    table, th, td, tr {
+                        border: 0;
+                        padding: 0;
+                    }
+
+                    table {
+                        margin-left: .5em;
+                        margin-right: 0;
+                    }
+
+                    table p:first-of-type {
+                        margin-top: 0;
+                    }
+
+                    table p:last-of-type {
+                        margin-bottom: 0
+                    }
+
+                    tr.oneof > td {
+                        border: 0;
+                    }
+
+                    table {
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                    }
+
+                    tr:first-child th:first-child {
+                        border: 0;
+                    }
+
+                    tr:first-child td:first-child {
+                        border: 0;
+                    }
+
+                    tr:first-child th:last-child {
+                        border: 0;
+                    }
+
+                    tr:first-child td:last-child {
+                        border: 0;
+                    }
+
+                    tr:last-child td {
+                        border: 0;
+                    }
+
+                    tr:last-child td:first-child {
+                        border: 0;
+                    }
+
+                    tr:last-child td:last-child {
+                        border: 0;
+                    }
+
+                    tr th:last-child {
+                        border: 0;
+                    }
+
+                    tr td:last-child {
+                        border: 0;
+                    }
+                </style>
+
+                <div class="search-results">
+                    <script>
+                        (function () {
+
+                            var cx = '013699703217164175118:dmevwrvc6os';
+
+                            var gcse = document.createElement('script');
+                            gcse.type = 'text/javascript';
+                            gcse.async = true;
+                            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(gcse, s);
+                        })();
+                    </script>
+
+
+                    <gcse:searchresults-only></gcse:searchresults-only>
+
+                </div>
+
+                <script>
+                    function getParameterByName(name, url) {
+                        if (!url) url = window.location.href;
+                        name = name.replace(/[\[\]]/g, "\\$&");
+                        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                                results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, " "));
+                    }
+
+                    var q = getParameterByName('q', window.location.href);
+                    document.getElementsByName('q')[0].value = q;
+                </script>
+
+
+            </main>
+
+
+            <div class="d-none d-print-block" aria-hidden="true">
+                <h2>Links</h2>
+                <ol id="endnotes"></ol>
+            </div>
+        </div>
+
+
     </div>
 </div>
+
+<div class="d-xl-none d-print-none">
+    <button id="scroll-to-top" aria-hidden="true" onclick="scrollToTop()" title="Back to top"><i class="fa fa-lg fa-arrow-up"></i></button>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script src="https://www.google.com/cse/brand?form=search_form"></script>
+
+
+<script src="/js/all.min.js" data-manual></script>
+
 
 <script>
     function getParameterByName(name, url) {
@@ -103,12 +275,5 @@ table {
     var q = getParameterByName('q', window.location.href);
     document.getElementsByName('q')[0].value = q;
 </script>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
-<script src="https://www.google.com/cse/brand?form=searchbox"></script>
-<script src="https://archive.istio.io/misc.js"></script>
 </body>
 </html>
