@@ -134,47 +134,6 @@ data:
         }
       }
 
-      # prow.istio.io
-      # Upgrade HTTP to HTTPS
-      server {
-        server_name prow.istio.io;
-        listen 80;
-
-        location = /_healthz {
-          add_header Content-Type text/plain;
-          return 200 "ok\n";
-        }
-
-        return 301 https://$server_name$request_uri;
-      }
-
-      # Handle HTTPS.
-      upstream prow {
-        server    35.190.0.30:80;
-        keepalive 10;
-      }
-
-      server {
-        server_name prow.istio.io;
-        listen 443 ssl http2;
-
-        location = /_healthz {
-          add_header Content-Type text/plain;
-          return 200 "ok\n";
-        }
-
-        location / {
-          proxy_set_header Host prow.istio.io;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $remote_addr;
-          proxy_set_header Connection "";
-          proxy_pass       http://prow;
-
-          add_header       X-Cache-Status $upstream_cache_status;
-          proxy_cache      off;
-        }
-      }
-
       # return 404 for any unknown servers (i.e. subdomains).
       server {
           listen 80 default_server;

@@ -27,7 +27,7 @@ spec:
           # Map all keys to files.
       - name: certs
         secret:
-          secretName: istio.io
+          secretName: istio-io-tls
           # Map all keys to files.
       - name: cache
         emptyDir: {}
