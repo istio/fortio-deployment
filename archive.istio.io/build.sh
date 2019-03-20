@@ -48,16 +48,10 @@ do
   npm install -g html-minifier
   scripts/gen_site.sh ${BASEURL}
 
-  echo "ONE"
-
   git checkout -- .
-  echo "TWO"
   git clean -f
-  echo "THREE"
   rm -rf ../public/${NAME}
-  echo "FOUR"
   mv public ../public/${NAME}
-  echo "FIVE"
   echo $NAME >> ../public/versions.txt
 done
 
