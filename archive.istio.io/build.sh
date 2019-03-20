@@ -2,7 +2,6 @@
 #
 # Build the archive site
 #
-# Assumes you have Jekyll installed.
 
 # List of name:tagOrBranch
 TOBUILD=(
@@ -21,16 +20,16 @@ TOBUILD_JEKYLL=(
 )
 
 # Grab the latest list of releases
-wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.github.io/master/data/releases.yml
+wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.io/master/data/releases.yml
 
-GITDIR=istio.github.io
+GITDIR=istio.io
 
-if [ -d $GITDIR ]; then
-  cd $GITDIR
+if [[ -d $GITDIR ]]; then
+  cd ${GITDIR}
   git fetch
 else
-  git clone https://github.com/istio/istio.github.io.git
-  cd $GITDIR
+  git clone https://github.com/istio/istio.io.git
+  cd ${GITDIR}
 fi
 
 rm ../public/versions.txt 2> /dev/null
@@ -42,17 +41,23 @@ do
   echo "### Building '$NAME' from $TAG for $BASEURL"
   git checkout -- .
   git clean -f
-  git checkout $TAG
+  git checkout ${TAG}
   git pull 2> /dev/null
   cp ../releases.yml data
 
   npm install -g html-minifier
-  scripts/gen_site.sh $BASEURL
+  scripts/gen_site.sh ${BASEURL}
+
+  echo "ONE"
 
   git checkout -- .
+  echo "TWO"
   git clean -f
-  rm -rf ../public/$NAME
-  mv public ../public/$NAME
+  echo "THREE"
+  rm -rf ../public/${NAME}
+  echo "FOUR"
+  mv public ../public/${NAME}
+  echo "FIVE"
   echo $NAME >> ../public/versions.txt
 done
 
@@ -63,7 +68,7 @@ do
   echo "### Building '$NAME' from $TAG"
   git checkout -- .
   git clean -f
-  git checkout $TAG
+  git checkout ${TAG}
   git pull 2> /dev/null
   echo "baseurl: /$NAME" > config_override.yml
   cp ../releases.yml _data
@@ -71,9 +76,9 @@ do
   bundle exec jekyll build --config _config.yml,config_override.yml
   git checkout -- .
   git clean -f
-  rm -rf ../public/$NAME
-  mv _site ../public/$NAME
-  echo $NAME >> ../public/versions.txt
+  rm -rf ../public/${NAME}
+  mv _site ../public/${NAME}
+  echo ${NAME} >> ../public/versions.txt
 done
 rm ../releases.yml
 echo "All done!"
