@@ -47,7 +47,7 @@ do
 
   npm install -g html-minifier
  # scripts/gen_site.sh ${BASEURL}
-  hugo --minify --baseURL "${BASEURL}"
+  hugo --minify --baseURL "${BASEURL}" --debug --verbose --verboseLog --log
 
   git checkout -- .
   git clean -f
