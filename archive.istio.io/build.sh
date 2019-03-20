@@ -46,8 +46,7 @@ do
   cp ../releases.yml data
 
   npm install -g html-minifier
- # scripts/gen_site.sh ${BASEURL}
-  hugo --minify --baseURL "${BASEURL}" --debug --verbose --verboseLog --log
+  scripts/gen_site.sh ${BASEURL}
 
   git checkout -- .
   git clean -f
