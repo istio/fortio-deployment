@@ -19,8 +19,8 @@ TOBUILD_JEKYLL=(
   v0.1:release-0.1
 )
 
-# Grab the latest list of releases
-wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.io/master/data/releases.yml
+# Grab the latest version info
+wget --no-check-certificate https://raw.githubusercontent.com/istio/istio.io/master/data/versions.yml
 
 GITDIR=istio.io
 
@@ -43,7 +43,7 @@ do
   git clean -f
   git checkout ${TAG}
   git pull 2> /dev/null
-  cp ../releases.yml data
+  cp ../versions.yml data
 
   npm install -g html-minifier
   scripts/gen_site.sh ${BASEURL}
@@ -65,7 +65,7 @@ do
   git checkout ${TAG}
   git pull 2> /dev/null
   echo "baseurl: /$NAME" > config_override.yml
-  cp ../releases.yml _data
+  cp ../versions.yml _data
   bundle install
   bundle exec jekyll build --config _config.yml,config_override.yml
   git checkout -- .
@@ -74,5 +74,5 @@ do
   mv _site ../public/${NAME}
   echo ${NAME} >> ../public/versions.txt
 done
-rm ../releases.yml
+rm ../versions.yml
 echo "All done!"
