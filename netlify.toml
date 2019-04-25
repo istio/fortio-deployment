@@ -1,6 +1,0 @@
-[build]
-    publish = "archive.istio.io/public"
-    command = "./buildarchive.sh"
-
-[build.environment]
-    HUGO_VERSION = "0.54.0"
